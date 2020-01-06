@@ -17,7 +17,7 @@ export function makeTTSRequest (text) {
   }
 
   const fileName = crypto.createHash('md5').update(text).digest('hex') + '.ogg'
-  const pathName = SOUND_CACHE_DIR + '/' + filename
+  const pathName = SOUND_CACHE_DIR + '/' + fileName
   return new Promise((resolve, reject) => {
     if (fsp.existsSync(pathName)) {
       console.log('[TTS] Serving cached version...')
