@@ -1,0 +1,14 @@
+{
+  "name": "hotline-client",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@google-cloud/text-to-speech": "^2.1.1",
+    "play-sound": "^1.1.3"
+  }
+}
