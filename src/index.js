@@ -6,7 +6,7 @@ let currentPlayer = null
 makeTTSRequest('Ende der Nachricht. Wählen Sie ihre gewünschte Reaktion oder wählen sie Raute, um die Nachricht erneut abzuspielen.')
   .then(filename => {
     playSound(filename)
-    setTimeout(() => playSound(filename), 2000)
+    setTimeout(() => { playSound(filename) }, 2000)
   })
 
 function playSound (filename) {
