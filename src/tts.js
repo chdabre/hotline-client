@@ -2,6 +2,7 @@ import textToSpeech from '@google-cloud/text-to-speech'
 import { promises as fsp } from 'fs'
 import crypto from 'crypto'
 
+const SOUND_CACHE_DIR = 'media'
 const client = new textToSpeech.TextToSpeechClient()
 export function makeTTSRequest (text) {
   const request = {
@@ -16,10 +17,16 @@ export function makeTTSRequest (text) {
   }
 
   const fileName = crypto.createHash('md5').update(text).digest('hex') + '.ogg'
+  const pathName = SOUND_CACHE_DIR + '/' + filename
   return new Promise((resolve, reject) => {
-    client.synthesizeSpeech(request)
-      .then(response => fsp.writeFile(fileName, response[0].audioContent, 'binary'))
-      .then(() => resolve(fileName))
-      .catch(error => reject(error))
+    if (fsp.existsSync(pathName)) {
+      console.log('[TTS] Serving cached version...')
+      resolve(pathName)
+    } else {
+      client.synthesizeSpeech(request)
+        .then(response => fsp.writeFile(pathName, response[0].audioContent, 'binary'))
+        .then(() => resolve(pathName))
+        .catch(error => reject(error))
+    }
   })
 }
