@@ -1,5 +1,6 @@
 import textToSpeech from '@google-cloud/text-to-speech'
-import { promises as fsp, fs } from 'fs'
+import { promises as fsp } from 'fs'
+import fs from 'fs'
 import crypto from 'crypto'
 
 const SOUND_CACHE_DIR = 'media'
