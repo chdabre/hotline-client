@@ -1,3 +1,4 @@
+import { spawn g} from 'child_process'
 import { makeTTSRequest } from './tts.js'
 
 makeTTSRequest('Ende der Nachricht. Ich liebe Sie.')
