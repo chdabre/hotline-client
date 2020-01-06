@@ -3,7 +3,7 @@ import { promises as fsp } from 'fs'
 import fs from 'fs'
 import crypto from 'crypto'
 
-const SOUND_CACHE_DIR = 'media'
+const SOUND_CACHE_DIR = './media'
 const client = new textToSpeech.TextToSpeechClient()
 export function makeTTSRequest (text) {
   const request = {
