@@ -1,5 +1,5 @@
 import textToSpeech from '@google-cloud/text-to-speech'
-import { promises as fsp } from 'fs'
+import { promises as fsp, fs } from 'fs'
 import crypto from 'crypto'
 
 const SOUND_CACHE_DIR = 'media'
@@ -19,7 +19,7 @@ export function makeTTSRequest (text) {
   const fileName = crypto.createHash('md5').update(text).digest('hex') + '.ogg'
   const pathName = SOUND_CACHE_DIR + '/' + fileName
   return new Promise((resolve, reject) => {
-    if (fsp.existsSync(pathName)) {
+    if (fs.existsSync(pathName)) {
       console.log('[TTS] Serving cached version...')
       resolve(pathName)
     } else {
