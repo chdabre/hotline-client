@@ -8,7 +8,7 @@ makeTTSRequest('Ende der Nachricht. Wählen Sie ihre gewünschte Reaktion oder w
 
 function playSound (filename) {
   return new Promise(((resolve, reject) => {
-    const player = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', '54ea92a2754c510bb08ebf019a48ef4f.ogg'])
+    const player = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
     player.stderr.on('data', (data) => {
       console.error(`[PLAYER] stderr:\n${data}`)
     })
