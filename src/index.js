@@ -36,7 +36,6 @@ pulsePin.watch((err, value) => {
   if (err) {
     throw err
   }
-  console.log(`PULSE`)
   if (dialing) dialCounter++
 })
 
