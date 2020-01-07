@@ -9,8 +9,8 @@
 import onoff from 'onoff'
 const Gpio = onoff.Gpio
 
-const DIAL_PIN_BCM = 68
-const PULSE_PIN_BCM = 71
+const DIAL_PIN_BCM = 19
+const PULSE_PIN_BCM = 18
 
 const dialPin = new Gpio(DIAL_PIN_BCM, 'in')
 const pulsePin = new Gpio(PULSE_PIN_BCM, 'in')
