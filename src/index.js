@@ -9,8 +9,11 @@
 import onoff from 'onoff'
 const Gpio = onoff.Gpio
 
-const dialPin = new Gpio(4, 'in')
-const pulsePin = new Gpio(5, 'in', 'falling', { debounceTimeout: 50 })
+const DIAL_PIN_BCM = 68
+const PULSE_PIN_BCM = 71
+
+const dialPin = new Gpio(DIAL_PIN_BCM, 'in')
+const pulsePin = new Gpio(PULSE_PIN_BCM, 'in', 'falling', { debounceTimeout: 50 })
 
 dialPin.watch((err, value) => {
   if (err) {
