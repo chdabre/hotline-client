@@ -27,8 +27,7 @@ dialPin.watch((err, value) => {
     dialing = true
     dialCounter = 1
   } else {
-    console.log('STOP DIALING')
-    console.log('Value: ', dialCounter)
+    console.log('Dialed value: ', dialCounter % 10)
   }
 })
 
