@@ -12,21 +12,32 @@ const Gpio = onoff.Gpio
 const DIAL_PIN_BCM = 19
 const PULSE_PIN_BCM = 18
 
-const dialPin = new Gpio(DIAL_PIN_BCM, 'in', 'falling', { debounceTimeout: 10 })
+const dialPin = new Gpio(DIAL_PIN_BCM, 'in', 'both', { debounceTimeout: 10 })
 const pulsePin = new Gpio(PULSE_PIN_BCM, 'in', 'falling', { debounceTimeout: 10 })
+
+let dialing = false
+let dialCounter = 0
 
 dialPin.watch((err, value) => {
   if (err) {
     throw err
   }
-  console.log(`DIAL Value changed to ${value}`)
+  if (value == 0) {
+    console.log('START DIALING')
+    dialing = true
+    dialCounter = 0
+  } else {
+    console.log('STOP DIALING')
+    console.log('Value: ', dialCounter)
+  }
 })
 
 pulsePin.watch((err, value) => {
   if (err) {
     throw err
   }
-  console.log(`PULSE Value changed to ${value}`)
+  console.log(`PULSE`)
+  if (dialing) dialCounter++
 })
 
 process.on('SIGINT', _ => {
