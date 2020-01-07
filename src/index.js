@@ -6,7 +6,8 @@
 //     setTimeout(() => { playSound(filename) }, 2000)
 //   })
 
-import { Gpio } from 'onoff'
+import onoff from 'onoff'
+const Gpio = onoff.Gpio
 
 const dialPin = new Gpio(4, 'in')
 const pulsePin = new Gpio(5, 'in', 'falling', { debounceTimeout: 50 })
