@@ -12,9 +12,15 @@ const Gpio = onoff.Gpio
 const DIAL_PIN_BCM = 19
 const PULSE_PIN_BCM = 18
 
-const dialPin = new Gpio(DIAL_PIN_BCM, 'in')
-// const pulsePin = new Gpio(PULSE_PIN_BCM, 'in')
-const pulsePin = new Gpio(PULSE_PIN_BCM, 'in', 'both', { debounceTimeout: 50 })
+const dialPin = new Gpio(DIAL_PIN_BCM, 'in', 'falling', { debounceTimeout: 10 })
+const pulsePin = new Gpio(PULSE_PIN_BCM, 'in', 'falling', { debounceTimeout: 10 })
+
+dialPin.watch((err, value) => {
+  if (err) {
+    throw err
+  }
+  console.log(`DIAL Value changed to ${value}`)
+})
 
 pulsePin.watch((err, value) => {
   if (err) {
@@ -23,14 +29,7 @@ pulsePin.watch((err, value) => {
   console.log(`PULSE Value changed to ${value}`)
 })
 
-// const watchInterval = setInterval(() => {
-//   dialPin.read().then(value => {
-//     console.log('Dial Pin Value: ', value)
-//   })
-// }, 50)
-
 process.on('SIGINT', _ => {
   dialPin.unexport()
   pulsePin.unexport()
-  // clearInterval(watchInterval)
 })
