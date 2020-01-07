@@ -6,22 +6,26 @@
 //     setTimeout(() => { playSound(filename) }, 2000)
 //   })
 
-import wpi from 'wiring-op'
+import { Gpio } from 'onoff'
 
-wpi.setup('wpo')
+const dialPin = new Gpio(4, 'in')
+const pulsePin = new Gpio(5, 'in', 'falling', { debounceTimeout: 50 })
 
-const DIAL_PIN = 8
-const PULSE_PIN = 9
-
-wpi.pinMode (DIAL_PIN, wpi.INPUT)
-wpi.pinMode (PULSE_PIN, wpi.INPUT)
-wpi.pullUpDnControl (DIAL_PIN, wpi.PUD_UP)
-wpi.pullUpDnControl (PULSE_PIN, wpi.PUD_UP)
-
-wpi.wiringPiISR(DIAL_PIN, wpi.INT_EDGE_FALLING, function(delta) {
-  console.log('DIAL pin changed to LOW (', delta, ')');
+dialPin.watch((err, value) => {
+  if (err) {
+    throw err
+  }
+  console.log(`DIAL Value changed to ${value}`)
 })
 
-wpi.wiringPiISR(PULSE_PIN, wpi.INT_EDGE_FALLING, function(delta) {
-  console.log('PULSE pin changed to LOW (', delta, ')');
+pulsePin.watch((err, value) => {
+  if (err) {
+    throw err
+  }
+  console.log(`DIAL Value changed to ${value}`)
+})
+
+process.on('SIGINT', _ => {
+  dialPin.unexport()
+  pulsePin.unexport()
 })
