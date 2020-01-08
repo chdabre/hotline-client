@@ -13,12 +13,11 @@ const dialConfig = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 class PhoneContext {
   constructor () {
-    this._state = new StateIdle(this)
-
     this.gpioManager = new GpioManager()
     this.soundManager = new SoundManager()
 
     this._setupListeners()
+    this._state = new StateIdle(this)
   }
 
   _setupListeners() {
