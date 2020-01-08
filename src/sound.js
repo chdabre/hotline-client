@@ -23,7 +23,7 @@ export default class SoundManager {
     const self = this
     return new Promise(((resolve, reject) => {
       if (this._currentPlayer) this._currentPlayer.kill('SIGINT')
-      this._currentPlayer = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
+      this._currentPlayer = spawn('/bin/sh', ['-c', `/usr/bin/opusdec --force-wav --quiet ${filename} - | /usr/bin/aplay -Dplug:dmix`])
       this._currentPlayer.stderr.on('data', (data) => {
         console.log(`[PLAYER] stderr:\n${data}`)
       })
