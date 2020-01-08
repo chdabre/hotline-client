@@ -26,7 +26,7 @@ export default class SoundManager {
 
       let player;
       if (!mplayer) {
-        const decoder = spawn('/usr/bin/opusdec', ['--force-wav', '--quiet', filename, `-' | /usr/bin/aplay -Dplug:dmix`])
+        const decoder = spawn('/usr/bin/opusdec', ['--force-wav', '--quiet', filename, '-'])
         player = spawn('/usr/bin/aplay', ['-Dplug:dmix'])
         decoder.stdout.pipe(player.stdin)
         this._currentPlayers.push(decoder)
