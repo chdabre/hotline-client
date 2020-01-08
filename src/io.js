@@ -92,7 +92,7 @@ export default class GpioManager extends EventEmitter {
     this._cradlePin.watch((err, value) => {
       if (err) {
       } else {
-        console.log(`[GPIO] cradle goes ${ value ? 'HIGH' : 'LOW' }`)
+        console.log(`[GPIO] cradle goes ${ value }`)
         this.emit('cradle', value)
       }
     })
@@ -107,7 +107,7 @@ export default class GpioManager extends EventEmitter {
     this._mutePin.watch((err, value) => {
       if (err) {
       } else {
-        console.log(`[GPIO] mute goes ${ value ? 'HIGH' : 'LOW' }`)
+        console.log(`[GPIO] mute goes ${ value }`)
         this.emit('mute', value)
       }
     })
