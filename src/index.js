@@ -44,6 +44,7 @@ class PhoneContext {
 class PhoneState {
   constructor (context) {
     this._context = context
+    console.log(`[STATE CHANGE] - ${ this.constructor.name }`)
   }
 
   onCradleUp () {}
