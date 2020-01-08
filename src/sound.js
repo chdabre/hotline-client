@@ -37,6 +37,9 @@ export default class SoundManager {
 
       player.on('stderr', (err) => console.error(err))
       player.on('close', function (code) {
+        const playerIndex = self._currentPlayers.indexOf(player)
+        if (playerIndex > -1) self._currentPlayers.splice(playerIndex, 1)
+
         if (code > 0) reject(new Error('Process failed with code '  + code))
         else resolve()
       })
