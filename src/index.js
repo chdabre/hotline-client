@@ -63,6 +63,10 @@ class StateIdle extends PhoneState {
   onCradleUp (cradleState) {
     this._context.setState(new StateGreeting(this._context))
   }
+
+  _init () {
+    this._context.soundManager.stopSound()
+  }
 }
 
 class StateGreeting extends PhoneState {
