@@ -6,8 +6,8 @@
 //     setTimeout(() => { playSound(filename) }, 2000)
 //   })
 
-import GpioManager from './io'
-import SoundManager from './sound'
+import GpioManager from './io.js'
+import SoundManager from './sound.js'
 
 const dialConfig = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
