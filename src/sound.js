@@ -36,10 +36,8 @@ export default class SoundManager {
       if (decoder) this._currentPlayers.push(decoder)
 
       player.on('close', function (code) {
-        //if (code > 0) reject(new Error('Process failed with code '  + code))
-        console.log('code', code)
-        //else resolve()
-        resolve(filename)
+        if (code > 0) reject(new Error('Process failed with code '  + code))
+        else resolve()
       })
     }))
   }
