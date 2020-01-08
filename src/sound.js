@@ -29,11 +29,11 @@ export default class SoundManager {
         decoder = spawn('/usr/bin/opusdec', ['--force-wav', '--quiet', filename, '-'])
         player = spawn('/usr/bin/aplay', ['-Dplug:dmix'])
         decoder.stdout.pipe(player.stdin).on('error', () => {})
+        this._currentPlayers.push(decoder)
       } else {
         player = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
       }
       this._currentPlayers.push(player)
-      if (decoder) this._currentPlayers.push(decoder)
 
       player.on('close', function (code) {
         if (code > 0) reject(new Error('Process failed with code '  + code))
@@ -44,7 +44,7 @@ export default class SoundManager {
 
   stopAll () {
     console.log(`Stop sound on ${ this._currentPlayers.length } players`)
-    this._currentPlayers.forEach(player => player.kill('SIGTERM'))
+    this._currentPlayers.forEach(player => player.kill('SIGINT'))
     this._currentPlayers = []
   }
 
