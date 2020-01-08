@@ -43,7 +43,7 @@ export default class SoundManager {
 
   stopAll () {
     console.log(`Stop sound on ${ this._currentPlayers.length } players`)
-    this._currentPlayers.forEach(player => player.kill('SIGINT'))
+    this._currentPlayers.forEach(player => player.kill('SIGTERM'))
     this._currentPlayers = []
   }
 
