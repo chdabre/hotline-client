@@ -44,6 +44,10 @@ export default class GpioManager extends EventEmitter {
     // Initialize the LED as LOW
     this._ledPin.write(Gpio.LOW)
       .catch(err => {})
+
+    setInterval(() => {
+      this._mutePin.read().then(value => console.log(value))
+    }, 500)
   }
 
   /**
