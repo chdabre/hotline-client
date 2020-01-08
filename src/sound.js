@@ -28,7 +28,7 @@ export default class SoundManager {
       if (!mplayer) {
         decoder = spawn('/usr/bin/opusdec', ['--force-wav', '--quiet', filename, '-'])
         player = spawn('/usr/bin/aplay', ['-Dplug:dmix'])
-        decoder.stdout.pipe(player.stdin)
+        decoder.stdout.pipe(player.stdin).on('error', () => {})
       } else {
         player = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
       }
