@@ -68,7 +68,7 @@ class StateIdle extends PhoneState {
 class StateGreeting extends PhoneState {
   _init () {
     this._context.soundManager.playSoundTTS('Hallo. Sie haben leider keine neuen Nachrichten.')
-      .then(() => this._context.setState(new StateIdle(this._context)))
+      .then(() => this._context.soundManager.playSound('http://us4.internet-radio.com:8266/', true))
   }
 }
 
