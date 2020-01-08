@@ -64,7 +64,7 @@ class StateIdle extends PhoneState {
   }
 
   _init () {
-    this._context.soundManager.stopSound()
+    this._context.soundManager.stopAll()
   }
 }
 

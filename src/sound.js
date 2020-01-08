@@ -4,7 +4,7 @@ import { makeTTSRequest } from './tts.js'
 
 export default class SoundManager {
   constructor () {
-    this._currentPlayer = null
+    this._currentPlayers = []
   }
 
   playSoundTTS (text, cache = true) {
@@ -22,17 +22,18 @@ export default class SoundManager {
   playSound (filename, mplayer = false) {
     const self = this
     return new Promise(((resolve, reject) => {
-      if (this._currentPlayer) this._currentPlayer.kill('SIGINT')
-      if (mplayer) {
-        this._currentPlayer = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
-      } else {
-        this._currentPlayer = spawn('/bin/sh', ['-c', `/usr/bin/opusdec --force-wav --quiet ${filename} - | /usr/bin/aplay -Dplug:dmix`])
-      }
-      this._currentPlayer.stderr.on('data', (data) => {
-        console.log(`[PLAYER] stderr:\n${data}`)
-      })
+      if (this.isPlaying()) this.stopAll()
+
+      this._currentPlayers.push(
+        mplayer ? spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
+        : spawn('/bin/sh', ['-c', `/usr/bin/opusdec --force-wav --quiet ${filename} - | /usr/bin/aplay -Dplug:dmix`])
+      )
+
+      // this._currentPlayer.stderr.on('data', (data) => {
+      //   console.log(`[PLAYER] stderr:\n${data}`)
+      // })
+
       this._currentPlayer.on('close', function (code) {
-        self._currentPlayer = null
         //if (code > 0) reject(new Error('Process failed with code '  + code))
         //else resolve()
         resolve(filename)
@@ -40,11 +41,13 @@ export default class SoundManager {
     }))
   }
 
-  stopSound () {
-    console.log('Stop sound on ', this._currentPlayer)
-    if (this._currentPlayer) {
-      this._currentPlayer.kill('SIGINT')
-      this._currentPlayer = null
-    }
+  stopAll () {
+    console.log(`Stop sound on ${ this._currentPlayers.length } players`)
+    this._currentPlayers.forEach(player => player.kill('SIGINT'))
+    this._currentPlayers = []
+  }
+
+  isPlaying () {
+    return this._currentPlayers.length > 0
   }
 }
