@@ -25,9 +25,11 @@ class PhoneContext {
     this.gpioManager.on('cradle', value => {
       switch (value) {
         case GpioManager.CRADLE_UP:
+          this.gpioManager.setLed(GpioManager.LED_ON)
           this._state.onCradleUp()
           break
         case GpioManager.CRADLE_DOWN:
+          this.gpioManager.setLed(GpioManager.LED_OFF)
           this._state.onCradleDown()
           break
       }
@@ -45,8 +47,10 @@ class PhoneState {
   constructor (context) {
     this._context = context
     console.log(`[STATE CHANGE] - ${ this.constructor.name }`)
+    this._init()
   }
 
+  _init () {}
   onCradleUp () {}
   onCradleDown () {
     this._context.setState(new StateIdle(this._context))
@@ -57,7 +61,14 @@ class PhoneState {
 
 class StateIdle extends PhoneState {
   onCradleUp (cradleState) {
-    this._context.setState(new StateIdle(this._context))
+    this._context.setState(new StateGreeting(this._context))
+  }
+}
+
+class StateGreeting extends PhoneState {
+  _init () {
+    this._context.soundManager.playSoundTTS('Hallo. Sie haben leider keine neuen Nachrichten.')
+      .then(() => this._context.setState(new StateIdle(this._context)))
   }
 }
 
