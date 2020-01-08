@@ -45,7 +45,7 @@ export default class GpioManager extends EventEmitter {
     this._startWatchingMute()
 
     // Initialize the LED as LOW
-    this._ledPin.write(Gpio.HIGH)
+    this._ledPin.write(Gpio.LOW)
       .catch(err => {})
   }
 

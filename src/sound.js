@@ -3,7 +3,7 @@ import { promises as fsp } from 'fs'
 import { makeTTSRequest } from './tts.js'
 
 export default class SoundManager {
-  constructor (props) {
+  constructor () {
     this._currentPlayer = null
   }
 
@@ -41,6 +41,7 @@ export default class SoundManager {
   }
 
   stopSound () {
+    console.log('Stop sound on ', this._currentPlayer)
     if (this._currentPlayer) {
       this._currentPlayer.kill('SIGINT')
       this._currentPlayer = null
