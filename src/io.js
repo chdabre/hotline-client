@@ -6,6 +6,8 @@ export default class GpioManager extends EventEmitter {
   // State constants
   static get CRADLE_UP () { return Gpio.HIGH }
   static get CRADLE_DOWN () { return Gpio.LOW }
+  static get MUTE_OFF () { return Gpio.HIGH }
+  static get MUTE_ON () { return Gpio.LOW }
 
   // Pins for rotary dial
   static get DIAL_PIN () { return 19 } // Connects to the DIAL output of the rotary dial
@@ -89,8 +91,28 @@ export default class GpioManager extends EventEmitter {
     this._cradlePin.watch((err, value) => {
       if (err) {
       } else {
+        console.log(`[GPIO] cradle goes ${ value ? 'HIGH' : 'LOW' }`)
         this.emit('cradle', value)
       }
     })
+  }
+
+  /**
+   * Watch the mute switch
+   * @emits mute - If the mute position changed
+   * @private
+   */
+  _startWatchingMute () {
+    this._mutePin.watch((err, value) => {
+      if (err) {
+      } else {
+        console.log(`[GPIO] mute goes ${ value ? 'HIGH' : 'LOW' }`)
+        this.emit('mute', value)
+      }
+    })
+  }
+
+  isMuted () {
+    return this._mutePin.read()
   }
 }
