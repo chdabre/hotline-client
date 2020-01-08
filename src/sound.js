@@ -1,6 +1,6 @@
 import { spawn } from "child_process"
 
-class SoundManager {
+export default class SoundManager {
   constructor (props) {
     this._currentPlayer = null
   }
@@ -20,5 +20,12 @@ class SoundManager {
         resolve(code)
       })
     }))
+  }
+
+  stopSound () {
+    if (this._currentPlayer) {
+      this._currentPlayer.kill('SIGINT')
+      this._currentPlayer = null
+    }
   }
 }

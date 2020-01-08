@@ -8,7 +8,7 @@ const client = new textToSpeech.TextToSpeechClient()
 export function makeTTSRequest (text) {
   const request = {
     input: { text },
-    // Select the language and SSML Voice Gender (optional)
+    // Configure voice
     voice: { name: 'de-DE-Wavenet-C', languageCode: 'de-DE' },
     // Select the type of audio encoding
     audioConfig: {
