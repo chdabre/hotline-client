@@ -37,6 +37,7 @@ export default class SoundManager {
 
       player.on('close', function (code) {
         //if (code > 0) reject(new Error('Process failed with code '  + code))
+        console.log('code', code)
         //else resolve()
         resolve(filename)
       })
