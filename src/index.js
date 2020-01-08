@@ -19,7 +19,7 @@ class PhoneContext {
     this.soundManager = new SoundManager()
 
     this.gpioManager.on('mute', value => {
-      console.log(`[MUTE] went ${ value ? 'HIGH' : 'LOW' }`g)
+      console.log(`[MUTE] went ${ value ? 'HIGH' : 'LOW' }`)
     })
     this._setupListeners()
   }
