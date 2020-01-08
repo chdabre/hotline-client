@@ -24,20 +24,20 @@ export default class SoundManager {
     return new Promise(((resolve, reject) => {
       if (this.isPlaying()) this.stopAll()
 
-      this._currentPlayers.push(
-        mplayer ? spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
+      const player = mplayer ? spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
         : spawn('/bin/sh', ['-c', `/usr/bin/opusdec --force-wav --quiet ${filename} - | /usr/bin/aplay -Dplug:dmix`])
-      )
 
       // this._currentPlayer.stderr.on('data', (data) => {
       //   console.log(`[PLAYER] stderr:\n${data}`)
       // })
 
-      this._currentPlayer.on('close', function (code) {
+      player.on('close', function (code) {
         //if (code > 0) reject(new Error('Process failed with code '  + code))
         //else resolve()
         resolve(filename)
       })
+
+      this._currentPlayers.push(player)
     }))
   }
 
