@@ -14,9 +14,9 @@ export default class GpioManager extends EventEmitter {
   static get PULSE_PIN () { return 18 } // Connects to the PULSE output of the rotary dial
 
   // Telephone-related pins
-  static get CRADLE_PIN () { return 2 } // Connects to the cradle switch
-  static get MUTE_PIN () { return 13 } // Connects to the mute switch
-  static get LED_PIN () { return 10 } // Connects to the led
+  static get CRADLE_PIN () { return 14 } // Connects to the cradle switch
+  static get MUTE_PIN () { return 16 } // Connects to the mute switch
+  static get LED_PIN () { return 15 } // Connects to the led
 
   constructor () {
     super()
@@ -35,6 +35,7 @@ export default class GpioManager extends EventEmitter {
       this._pulsePin.unexport()
       this._cradlePin.unexport()
       this._mutePin.unexport()
+      this._ledPin.unexport()
     })
 
     this._startWatchingDial()
