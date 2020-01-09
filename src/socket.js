@@ -34,7 +34,10 @@ export default class SocketManager extends EventEmitter {
     return new Promise((resolve, reject) => {
       if (!this._resolveNewMessages) {
         this._resolveNewMessages = resolve
-        setTimeout(() => reject(new Error('Timeout')), 1000)
+        setTimeout(() => {
+          this._resolveNewMessages = null
+          reject(new Error('Timeout'))
+        }, 1000)
       } else {
         reject(new Error('No concurrent requests are allowed.'))
       }
