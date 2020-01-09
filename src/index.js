@@ -124,6 +124,7 @@ class StateNoMessages extends PhoneState {
  */
 class StateReadMessage extends PhoneState {
   _init () {
+    console.log(this._context.newMessages)
     const message = this._context.newMessages.pop()
     console.log(message)
     if (message.url) {
