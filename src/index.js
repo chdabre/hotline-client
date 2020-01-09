@@ -16,6 +16,7 @@ class PhoneContext {
     this._setupListeners()
 
     this.newMessages = []
+    this.currentMessage = null
 
     // Initialize state
     this._state = new StateIdle(this)
@@ -124,16 +125,38 @@ class StateNoMessages extends PhoneState {
  */
 class StateReadMessage extends PhoneState {
   _init () {
-    const message = this._context.newMessages.pop()
+    const message = this._context.newMessages.shift()
     if (typeof message !== 'undefined') {
+      this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(`Nachricht vom ${ new Date(message.date).toLocaleString() }`)
         .then(() => this._context.soundManager.playSound(message.url, true))
-        .then(() => this._context.setState(new StateReadMessage(this._context)))
+        .then(() => this._context.setState(new StateExpectResponse(this._context)))
         .catch(() => {})
     } else {
       this._context.setState(new StateNoMessages(this._context))
     }
   }
 }
+
+/**
+ * Read out new messages until there are no more.
+ */
+class StateExpectResponse extends PhoneState {
+  _init () {
+    this._context.soundManager.playSoundTTS(`Ende der Nachricht. Wählen Sie Ihre gewünschte Reaktion oder wählen Sie Raute, um die Nachricht zu wiederholen.`)
+      .catch(() => {})
+  }
+
+  onDialInput (input) {
+    if (input === '#') {
+      this._context.newMessages.unshift(this._context.currentMessage)
+      this._context.setState(new StateReadMessage(this._context))
+    } else {
+      this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
+        .then(() => this._context.setState(new StateReadMessage(this._context)))
+    }
+  }
+}
+
 
 new PhoneContext()
