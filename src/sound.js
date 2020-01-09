@@ -36,6 +36,7 @@ export default class SoundManager {
       }
       this._currentPlayers.push(player)
 
+      player.on('stout', (out) => console.log(out))
       player.on('stderr', (err) => console.error(err))
       player.on('close', function (code) {
         if (code > 0) reject(new Error('Process failed with code '  + code))
