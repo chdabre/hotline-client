@@ -1,5 +1,6 @@
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
+import SocketManager from './socket.js'
 
 const dialConfig = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
@@ -10,6 +11,7 @@ class PhoneContext {
   constructor () {
     this.gpioManager = new GpioManager()
     this.soundManager = new SoundManager()
+    this.socketManager = new SocketManager()
 
     this._setupListeners()
 
