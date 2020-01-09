@@ -32,7 +32,7 @@ export default class SoundManager {
         decoder.stdout.pipe(player.stdin).on('error', () => {})
         this._currentPlayers.push(decoder)
       } else {
-        player = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', filename])
+        player = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', '-cache', '10000', filename])
       }
       this._currentPlayers.push(player)
 
