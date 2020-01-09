@@ -1,6 +1,6 @@
 import { spawn } from "child_process"
 import { promises as fsp } from 'fs'
-import { makeTTSRequest } from './tts.js'
+import TTSProvider from './tts.js'
 
 export default class SoundManager {
   constructor () {
@@ -8,8 +8,9 @@ export default class SoundManager {
   }
 
   playSoundTTS (text, cache = true) {
+    if (!this._ttsProvider) this._ttsProvider = new TTSProvider({ name: 'de-DE-Wavenet-C', languageCode: 'de-DE' })
     return new Promise((resolve, reject) => {
-      makeTTSRequest(text)
+      this._ttsProvider.makeTTSRequest(text)
         .then(filename => this.playSound(filename))
         .then(filename => {
           if (!cache) fsp.unlink(filename).then(() => resolve())
@@ -37,9 +38,6 @@ export default class SoundManager {
 
       player.on('stderr', (err) => console.error(err))
       player.on('close', function (code) {
-        const playerIndex = self._currentPlayers.indexOf(player)
-        if (playerIndex > -1) self._currentPlayers.splice(playerIndex, 1)
-
         if (code > 0) reject(new Error('Process failed with code '  + code))
         else resolve()
       })
@@ -47,7 +45,7 @@ export default class SoundManager {
   }
 
   stopAll () {
-    console.log(`Stop sound on ${ this._currentPlayers.length } players`)
+    console.log(`[SOUND] Stop sound on ${ this._currentPlayers.length } players`)
     this._currentPlayers.forEach(player => player.kill('SIGINT'))
     this._currentPlayers = []
   }

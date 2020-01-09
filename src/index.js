@@ -1,47 +1,47 @@
-// import { makeTTSRequest } from './tts.js'
-//
-// makeTTSRequest('Ende der Nachricht. Wählen Sie ihre gewünschte Reaktion oder wählen sie Raute, um die Nachricht erneut abzuspielen.')
-//   .then(filename => {
-//     playSound(filename)
-//     setTimeout(() => { playSound(filename) }, 2000)
-//   })
-
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 
-const dialConfig = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+const dialConfig = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
+/**
+ * Represents the application state
+ */
 class PhoneContext {
   constructor () {
     this.gpioManager = new GpioManager()
     this.soundManager = new SoundManager()
 
     this._setupListeners()
+
+    // Initialize state
     this._state = new StateIdle(this)
   }
 
+  /**
+   * Start listening to gpio events
+   * @private
+   */
   _setupListeners() {
     this.gpioManager.on('cradle', value => {
-      switch (value) {
-        case GpioManager.CRADLE_UP:
-          this.gpioManager.setLed(GpioManager.LED_ON)
-          this._state.onCradleUp()
-          break
-        case GpioManager.CRADLE_DOWN:
-          this.gpioManager.setLed(GpioManager.LED_OFF)
-          this._state.onCradleDown()
-          break
-      }
+      if (value === GpioManager.CRADLE_UP) this._state.onCradleUp()
+      else if (value === GpioManager.CRADLE_DOWN) this._state.onCradleDown()
     })
 
     this.gpioManager.on('dial', value => this._state.onDialInput(dialConfig[value]))
   }
 
+  /**
+   * Set a new application state
+   * @param newState { PhoneState } - The state which replaces the old state
+   */
   setState (newState) {
-    this._state =  newState
+    this._state = newState
   }
 }
 
+/**
+ * Represents a state the application can be in
+ */
 class PhoneState {
   constructor (context) {
     this._context = context
@@ -50,14 +50,20 @@ class PhoneState {
   }
 
   _init () {}
-  onCradleUp () {}
+  onCradleUp () {
+    this._context.gpioManager.setLed(GpioManager.LED_ON)
+  }
   onCradleDown () {
+    this._context.gpioManager.setLed(GpioManager.LED_OFF)
     this._context.setState(new StateIdle(this._context))
   }
 
   onDialInput(input) { console.log(`[DIAL] ${input}`) }
 }
 
+/**
+ * The "hung up" state - The handset is in the cradle and nothing is happening.
+ */
 class StateIdle extends PhoneState {
   onCradleUp (cradleState) {
     this._context.setState(new StateGreeting(this._context))
@@ -68,10 +74,12 @@ class StateIdle extends PhoneState {
   }
 }
 
+/**
+ * The Handset has just been picked up
+ */
 class StateGreeting extends PhoneState {
   _init () {
-    this._context.soundManager.playSoundTTS('Hallo. Sie haben leider keine neuen Nachrichten. Bitte Legen Sie den Hörer auf.')
-      .then(() => this._context.soundManager.playSound('http://ice1.somafm.com/groovesalad-256-mp3', true))
+    this._context.soundManager.playSoundTTS('Hallo du kleines verwahrlostes Sackhaar. Deine Mailbox ist leer. Und glaub nicht, dass sich das so schnell ändern wird.')
       .catch(() => {})
   }
 }
