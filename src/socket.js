@@ -46,7 +46,7 @@ export default class SocketManager extends EventEmitter {
 
   sendReaction (id, message) {
     return new Promise((resolve, reject) => {
-      this._socket.emit('send_reaction', { id, message })
+      this._socket.emit('send_reaction', { id: 'orange', message_id: id, message })
       resolve()
     })
   }
