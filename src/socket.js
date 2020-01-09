@@ -37,7 +37,7 @@ export default class SocketManager extends EventEmitter {
         setTimeout(() => {
           this._resolveNewMessages = null
           reject(new Error('Timeout'))
-        }, 1000)
+        }, 5000)
       } else {
         reject(new Error('No concurrent requests are allowed.'))
       }
