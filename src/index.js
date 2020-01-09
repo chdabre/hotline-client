@@ -124,9 +124,8 @@ class StateNoMessages extends PhoneState {
  */
 class StateReadMessage extends PhoneState {
   _init () {
-    console.log(this._context.newMessages)
     const message = this._context.newMessages.pop()
-    if (message.url) {
+    if (typeof message !== 'undefined') {
       this._context.soundManager.playSoundTTS(`Nachricht vom ${ new Date(message.date).toLocaleString() }`)
         .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateReadMessage(this._context)))
