@@ -95,7 +95,6 @@ class StateGreeting extends PhoneState {
   _init () {
     this._context.socketManager.getNewMessages()
       .then(messages => {
-        console.log(messages)
         const messageCount = messages.messages.length
         this._context.newMessages = messages.messages
 
@@ -126,7 +125,8 @@ class StateNoMessages extends PhoneState {
 class StateReadMessage extends PhoneState {
   _init () {
     const message = this._context.newMessages.pop()
-    if (message) {
+    console.log(message)
+    if (message.url) {
       this._context.soundManager.playSoundTTS(`Nachricht vom ${ message.date }`)
         .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateReadMessage(this._context)))
