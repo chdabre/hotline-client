@@ -15,6 +15,8 @@ class PhoneContext {
 
     this._setupListeners()
 
+    this.newMessages = []
+
     // Initialize state
     this._state = new StateIdle(this)
   }
@@ -92,10 +94,45 @@ class StateIdle extends PhoneState {
 class StateGreeting extends PhoneState {
   _init () {
     this._context.socketManager.getNewMessages()
-      .then(messages => console.log(messages))
+      .then(messages => {
+        const messageCount = messages.messages.length
+        this._context.newMessages = messages.messages
 
-    this._context.soundManager.playSoundTTS('Hallo, du kleines verwahrlostes Sackhaar. Deine Mailbox ist leer. Und glaub nicht, dass sich das so schnell ändern wird.')
+        if (messageCount > 0) {
+          this._context.soundManager.playSoundTTS(`Sie haben ${messageCount} neue Nachrichten.`, false)
+          this._context.setState(new StateReadMessage(this._context))
+            .catch(() => {})
+        }
+        else this._context.setState(new StateNoMessages(this._context))
+      })
+  }
+}
+
+/**
+ * There are no new messages.
+ */
+class StateNoMessages extends PhoneState {
+  _init () {
+    this._context.soundManager.playSoundTTS('Keine neuen Nachrichten.')
+      .then(() => this._context.setState(new StateIdle(this._context)))
       .catch(() => {})
+  }
+}
+
+/**
+ * Read out new messages until there are no more.
+ */
+class StateReadMessage extends PhoneState {
+  _init () {
+    const message = this._context.newMessages.pop()
+    if (message) {
+      this._context.soundManager.playSoundTTS(`Nachricht vom ${ message.date }`)
+        .then(() => this._context.soundManager.playSound(message.url, true))
+        .then(() => this._context.setState(new StateReadMessage(this._context)))
+        .catch(() => {})
+    } else {
+      this._context.setState(new StateNoMessages(this._context))
+    }
   }
 }
 

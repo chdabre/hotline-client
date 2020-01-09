@@ -16,7 +16,6 @@ export default class SocketManager extends EventEmitter {
     this._socket.on('init', (msg) => this.emit('init', msg))
 
     this._socket.on('new_messages', (msg) => {
-      console.log(msg)
       if (this._resolveNewMessages) this._resolveNewMessages(msg)
     })
   }
