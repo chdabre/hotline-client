@@ -91,6 +91,9 @@ class StateIdle extends PhoneState {
  */
 class StateGreeting extends PhoneState {
   _init () {
+    this._context.socketManager.getNewMessages()
+      .then(messages => console.log(messages))
+
     this._context.soundManager.playSoundTTS('Hallo, du kleines verwahrlostes Sackhaar. Deine Mailbox ist leer. Und glaub nicht, dass sich das so schnell ändern wird.')
       .catch(() => {})
   }
