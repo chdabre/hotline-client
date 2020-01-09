@@ -24,12 +24,17 @@ class PhoneContext {
    * @private
    */
   _setupListeners() {
+    // Cradle Events
     this.gpioManager.on('cradle', value => {
       if (value === GpioManager.CRADLE_UP) this._state.onCradleUp()
       else if (value === GpioManager.CRADLE_DOWN) this._state.onCradleDown()
     })
 
+    // Dial Events
     this.gpioManager.on('dial', value => this._state.onDialInput(dialConfig[value]))
+
+    // Connection Initialization
+    this.socketManager.on('init', msg => this._onInit(msg))
   }
 
   /**
@@ -38,6 +43,11 @@ class PhoneContext {
    */
   setState (newState) {
     this._state = newState
+  }
+
+  _onInit (msg) {
+    console.log('[PHONE] Sucessfully authorized with server.')
+    console.log(msg.hasMessages ? 'New messages available': 'No new messages.')
   }
 }
 
