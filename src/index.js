@@ -100,7 +100,7 @@ class StateGreeting extends PhoneState {
         this._context.newMessages = messages.messages
 
         if (messageCount > 0) {
-          this._context.soundManager.playSoundTTS(`Sie haben ${messageCount} neue Nachrichten.`, false)
+          this._context.soundManager.playSoundTTS(`Sie haben ${messageCount} neue Nachrichten.`)
             .then(() => this._context.setState(new StateReadMessage(this._context)))
             .catch(() => {})
         }
