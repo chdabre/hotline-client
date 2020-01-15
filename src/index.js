@@ -131,7 +131,7 @@ class StateReadMessage extends PhoneState {
       this._context.soundManager.playSoundTTS(`Nachricht vom ${ new Date(message.date).x.toLocaleString('de', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' }) }`)
         .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateExpectResponse(this._context)))
-        .catch(() => {})
+        .catch((e) => console.log(e))
     } else {
       this._context.setState(new StateNoMessages(this._context))
     }
