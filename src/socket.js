@@ -31,7 +31,7 @@ export default class SocketManager extends EventEmitter {
   }
 
   _onNotify () {
-    this._context.soundManager.playSound('./assets/ring.ogg')
+    this._context.soundManager.playSound('./assets/ring.opus')
   }
 
   getNewMessages () {
