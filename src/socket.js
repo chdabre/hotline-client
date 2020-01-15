@@ -4,8 +4,11 @@ import io from 'socket.io-client'
 export default class SocketManager extends EventEmitter {
   static get SOCKET_URL () { return 'http://10.0.1.165:3000' }
 
-  constructor () {
+  constructor (context) {
     super()
+
+    // PhoneContext
+    this._context = context
 
     this._socket = io(SocketManager.SOCKET_URL)
     this._setupHandlers()
@@ -13,6 +16,7 @@ export default class SocketManager extends EventEmitter {
 
   _setupHandlers () {
     this._socket.on('connect', () => this._onConnect())
+    this._socket.on('notify', () => this._onNotify())
     this._socket.on('init', (msg) => this.emit('init', msg))
 
     this._socket.on('new_messages', (msg) => {
@@ -24,6 +28,10 @@ export default class SocketManager extends EventEmitter {
     this._socket.emit('init', {
       id: 'orange'
     })
+  }
+
+  _onNotify () {
+    this._context.soundManager.playSound(__dirname + '/assets/ring.ogg')
   }
 
   getNewMessages () {

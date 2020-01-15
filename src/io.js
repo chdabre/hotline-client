@@ -20,8 +20,11 @@ export default class GpioManager extends EventEmitter {
   static get MUTE_PIN () { return 16 } // Connects to the mute switch
   static get LED_PIN () { return 15 } // Connects to the led
 
-  constructor () {
+  constructor (context) {
     super()
+
+    // PhoneContext
+    this._context = context
 
     // Setup pins
     this._dialPin = new Gpio(GpioManager.DIAL_PIN, 'in', 'both', { debounceTimeout: 10 })

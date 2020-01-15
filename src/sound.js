@@ -3,7 +3,10 @@ import { promises as fsp } from 'fs'
 import TTSProvider from './tts.js'
 
 export default class SoundManager {
-  constructor () {
+  constructor (context) {
+    // PhoneContext
+    this._context = context
+
     this._currentPlayers = []
   }
 

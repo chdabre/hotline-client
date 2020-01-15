@@ -9,9 +9,9 @@ const dialConfig = ['❤️', '😂', '🍆', '🍑', '😡', '🦕', '🍻', '�
  */
 class PhoneContext {
   constructor () {
-    this.gpioManager = new GpioManager()
-    this.soundManager = new SoundManager()
-    this.socketManager = new SocketManager()
+    this.gpioManager = new GpioManager(this)
+    this.soundManager = new SoundManager(this)
+    this.socketManager = new SocketManager(this)
 
     this._setupListeners()
 
