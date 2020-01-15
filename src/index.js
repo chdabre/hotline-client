@@ -128,8 +128,7 @@ class StateReadMessage extends PhoneState {
     const message = this._context.newMessages.shift()
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
-      console.log(this._context.currentMessage)
-      this._context.soundManager.playSoundTTS(`Nachricht vom ${ new Date(message.date).x.toLocaleString('de', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' }) }`)
+      this._context.soundManager.playSoundTTS(`Nachricht vom ${ new Date(message.date).toLocaleString('de', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' }) }`)
         .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateExpectResponse(this._context)))
         .catch((e) => console.log(e))
