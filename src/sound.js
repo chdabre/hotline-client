@@ -26,6 +26,8 @@ export default class SoundManager {
   playSound (filename, mplayer = false) {
     const self = this
     return new Promise(((resolve, reject) => {
+      // Don't attempt to open a player instance if you're not on a real device
+      if (process.env.DISABLE_HARDWARE) resolve(filename)
       if (this.isPlaying()) this.stopAll()
 
       let player, decoder;

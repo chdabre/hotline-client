@@ -2,6 +2,11 @@ import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
 
+/**
+ * Configure the mapping of emojis to the dialer.
+ * Number mapping: [1,2,3,4,5,6,7,8,9,0] This means array index 9 would correspond to number 0 on the dialer.
+ * @type {string[]}
+ */
 const dialConfig = ['❤️', '😂', '🍆', '🍑', '😡', '🦕', '🍻', '😊', '👌', '#']
 
 /**
@@ -18,7 +23,11 @@ class PhoneContext {
     this.newMessages = []
     this.currentMessage = null
 
-    // Initialize state
+    /**
+     * Initialize state
+     * @type {PhoneState}
+     * @private
+     */
     this._state = new StateIdle(this)
   }
 
@@ -158,5 +167,5 @@ class StateExpectResponse extends PhoneState {
   }
 }
 
-
+// Initialize the state
 new PhoneContext()

@@ -26,6 +26,15 @@ export default class GpioManager extends EventEmitter {
     // PhoneContext
     this._context = context
 
+    // Don't try to setup gpio pins if there is no hardware for it.
+    if (!process.env.DISABLE_HARDWARE) this._setup()
+  }
+
+  /**
+   * Setup all pins and listeners
+   * @private
+   */
+  _setup () {
     // Setup pins
     this._dialPin = new Gpio(GpioManager.DIAL_PIN, 'in', 'both', { debounceTimeout: 10 })
     this._pulsePin = new Gpio(GpioManager.PULSE_PIN, 'in', 'falling', { debounceTimeout: 10 })

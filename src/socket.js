@@ -2,7 +2,7 @@ import EventEmitter from 'events'
 import io from 'socket.io-client'
 
 export default class SocketManager extends EventEmitter {
-  static get SOCKET_URL () { return 'http://10.0.1.165:3000' }
+  static get SOCKET_URL () { return process.env.SOCKET_URL || 'http://hotline.imakethings.ch' }
 
   constructor (context) {
     super()
