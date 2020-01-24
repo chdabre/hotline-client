@@ -35,9 +35,7 @@ export default class SocketManager extends EventEmitter {
   }
 
   getNewMessages () {
-    this._socket.emit('get_new_messages', {
-      id: 'orange'
-    })
+    this._socket.emit('get_new_messages')
 
     return new Promise((resolve, reject) => {
       if (!this._resolveNewMessages) {
@@ -54,7 +52,7 @@ export default class SocketManager extends EventEmitter {
 
   sendReaction (id, message) {
     return new Promise((resolve, reject) => {
-      this._socket.emit('send_reaction', { id: 'orange', message_id: id, message })
+      this._socket.emit('send_reaction', { message_id: id, message })
       resolve()
     })
   }
