@@ -78,7 +78,7 @@ class PhoneContext {
   _onInit (msg) {
     console.log('[PHONE] Sucessfully authorized with server.')
     console.log(msg.hasMessages ? 'New messages available': 'No new messages.')
-    this._context.soundManager.playSoundTTS(i18n.__('connected'))
+    this.soundManager.playSoundTTS(i18n.__('connected'))
       .catch(() => {})
   }
 }
