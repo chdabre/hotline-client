@@ -92,9 +92,7 @@ class PhoneState {
   }
 
   _init () {}
-  onCradleUp () {
-    this._context.gpioManager.setLed(GpioManager.LED_ON)
-  }
+  onCradleUp () {}
   onCradleDown () {
     this._context.gpioManager.setLed(GpioManager.LED_OFF)
     this._context.setState(new StateIdle(this._context))
@@ -127,6 +125,8 @@ class StateGreeting extends PhoneState {
       .then(messages => {
         const messageCount = messages.messages.length
         this._context.newMessages = messages.messages
+
+        this._context.gpioManager.setLed(messageCount > 0 ? GpioManager.LED_ON : GpioManager.LED_OFF)
 
         this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
           .then(() => {
