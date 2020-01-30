@@ -198,9 +198,7 @@ class StateTransactionEnd extends PhoneState {
       .then(hasUpdate => {
         if (hasUpdate) {
           return this._context.soundManager.playSoundTTS(i18n.__('updateAvailable'))
-            .catch(() => {})
-        }
-        return new Promise(resolve => resolve())
+        } else return Promise.resolve()
       })
       .then(() => this._context.soundManager.playSound('http://us4.internet-radio.com:8266/stream', true))
       .catch(() => {})
