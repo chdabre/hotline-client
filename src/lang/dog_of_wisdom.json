@@ -1,0 +1,7 @@
+{
+  "greeting": "<audio src=\"https://hotline.imakethings.ch/sound/bahbababa.mp3\"/>",
+  "noMoreMessages": "<audio src=\"https://hotline.imakethings.ch/sound/bah.mp3\"/>",
+  "messageHeader": "<audio src=\"https://hotline.imakethings.ch/sound/hababadagada.mp3\"/>",
+  "endOfMessage": "<audio src=\"https://hotline.imakethings.ch/sound/hababa.mp3\"/>",
+  "updateAvailable": "<audio src=\"https://hotline.imakethings.ch/sound/hadada.mp3\"/>"
+}

@@ -155,10 +155,7 @@ class StateReadMessage extends PhoneState {
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(
-        i18n.__('messageHeader', {
-          date: message.date.toISOString().substr(0,10),
-          time: message.date.toTimeString().substring(0,5)
-        })
+        i18n.__('messageHeader', new Date(message.date).toLocaleString('de'))
       )
         .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateExpectResponse(this._context)))

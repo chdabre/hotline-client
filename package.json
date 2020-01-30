@@ -5,7 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test-strings": "node src/test-strings.js"
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^2.1.1",
