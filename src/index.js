@@ -2,6 +2,7 @@ import i18n from 'i18n'
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
+import { checkForUpdates } from './utils'
 
 /**
  * Configure the mapping of emojis to the dialer.
@@ -193,7 +194,15 @@ class StateExpectResponse extends PhoneState {
  */
 class StateTransactionEnd extends PhoneState {
   _init () {
-    this._context.soundManager.playSound('http://us4.internet-radio.com:8266/stream', true)
+    checkForUpdates()
+      .then(hasUpdate => {
+        if (hasUpdate) {
+          return this._context.soundManager.playSoundTTS(i18n.__('updateAvailable'))
+            .catch(() => {})
+        }
+        return new Promise(resolve => resolve())
+      })
+      .then(() => this._context.soundManager.playSound('http://us4.internet-radio.com:8266/stream', true))
       .catch(() => {})
   }
 }
