@@ -133,15 +133,6 @@ class StateGreeting extends PhoneState {
             else this._context.setState(new StateTransactionEnd(this._context))
           })
           .catch(error => console.log(error))
-
-        if (messageCount > 0) {
-
-        }
-        else {
-          this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
-            .then(() => this._context.setState(new StateReadMessage(this._context)))
-            .catch(() => {})
-        }
       })
   }
 }
