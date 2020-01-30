@@ -89,7 +89,6 @@ class PhoneState {
     this._context = context
     console.log(`[STATE CHANGE] - ${ this.constructor.name }`)
 
-    this._context.gpioManager.setLed(this._context.newMessages.length > 0 ? GpioManager.LED_ON : GpioManager.LED_OFF)
     this._init()
   }
 
@@ -126,6 +125,7 @@ class StateGreeting extends PhoneState {
       .then(messages => {
         const messageCount = messages.messages.length
         this._context.newMessages = messages.messages
+        this._context.gpioManager.setLed(messageCount > 0 ? GpioManager.LED_ON : GpioManager.LED_OFF)
 
         this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
           .then(() => {
@@ -162,6 +162,7 @@ class StateReadMessage extends PhoneState {
  */
 class StateNoMoreMessages extends PhoneState {
   _init () {
+    this._context.gpioManager.setLed(GpioManager.LED_OFF)
     this._context.soundManager.playSoundTTS(i18n.__('noMoreMessages'))
       .then(() => this._context.setState(new StateTransactionEnd(this._context)))
       .catch(() => {})
