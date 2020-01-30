@@ -12,6 +12,8 @@ export default class TTSProvider {
   }
 
   makeTTSRequest (text) {
+    console.log(`[TTS] Creating TTS for: ${text}`)
+
     const request = {
       input: { ssml: `<speak>${text}</speak>` },
       voice: this._voiceSettings,
