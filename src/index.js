@@ -2,7 +2,7 @@ import i18n from 'i18n'
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
-import { checkForUpdates } from './utils'
+import { checkForUpdates } from './utils.js'
 
 /**
  * Configure the mapping of emojis to the dialer.
