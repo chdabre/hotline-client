@@ -72,6 +72,7 @@ class PhoneContext {
     const locales = i18n.getLocales()
     const locale = locales[(Math.random() * locales.length) | 0]
     i18n.setLocale(locale)
+    console.log(`[LOCALE] ${locale}`)
   }
 
   _onInit (msg) {
