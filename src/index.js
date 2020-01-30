@@ -133,7 +133,7 @@ class StateGreeting extends PhoneState {
             if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
             else this._context.setState(new StateTransactionEnd(this._context))
           })
-          .catch(() => {})
+          .catch(() => console.log(error))
 
         if (messageCount > 0) {
 
