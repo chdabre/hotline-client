@@ -200,7 +200,7 @@ class StateTransactionEnd extends PhoneState {
           return this._context.soundManager.playSoundTTS(i18n.__('updateAvailable'))
         } else return Promise.resolve()
       })
-      .then(() => this._context.soundManager.playSound('http://us4.internet-radio.com:8266/stream', true))
+      .then(() => this._context.soundManager.playSound('http://198.58.98.83:8266/stream', true))
       .catch(() => {})
   }
 }
