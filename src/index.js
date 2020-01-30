@@ -193,7 +193,7 @@ class StateExpectResponse extends PhoneState {
  */
 class StateTransactionEnd extends PhoneState {
   _init () {
-    this._context.soundManager.playSound('http://ice1.somafm.com/groovesalad-256-mp3', true)
+    this._context.soundManager.playSound('http://us4.internet-radio.com:8266/stream', true)
       .catch(() => {})
   }
 }
