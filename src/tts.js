@@ -13,7 +13,7 @@ export default class TTSProvider {
 
   makeTTSRequest (text) {
     const request = {
-      input: { text },
+      input: { ssml: `<speak>${text}</speak>` },
       voice: this._voiceSettings,
       // Select the type of audio encoding
       audioConfig: {

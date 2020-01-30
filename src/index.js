@@ -1,6 +1,7 @@
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
+import { getGitRef } from './utils.js'
 
 /**
  * Configure the mapping of emojis to the dialer.
