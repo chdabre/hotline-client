@@ -1,7 +1,7 @@
+import i18n from 'i18n'
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
-import { checkForUpdates } from './utils.js'
 
 /**
  * Configure the mapping of emojis to the dialer.
@@ -19,6 +19,13 @@ class PhoneContext {
     this.soundManager = new SoundManager(this)
     this.socketManager = new SocketManager(this)
 
+    i18n.configure({
+      locales: ['de_normal'],
+      defaultLocale: 'de_normal',
+      directory: 'src/lang'
+    })
+    i18n.setLocale('de_normal')
+
     this._setupListeners()
 
     this.newMessages = []
@@ -30,8 +37,6 @@ class PhoneContext {
      * @private
      */
     this._state = new StateIdle(this)
-
-    checkForUpdates().then(ref => console.log(ref))
   }
 
   /**
@@ -58,6 +63,15 @@ class PhoneContext {
    */
   setState (newState) {
     this._state = newState
+  }
+
+  /**
+   * Set the i18n locale to a random available locale.
+   */
+  pickRandomLocale () {
+    const locales = i18n.getLocales()
+    const locale = locales[(Math.random() * locales.length) | 0]
+    i18n.setLocale(locale)
   }
 
   _onInit (msg) {
@@ -106,29 +120,29 @@ class StateIdle extends PhoneState {
  */
 class StateGreeting extends PhoneState {
   _init () {
+    this._context.pickRandomLocale()
+
     this._context.socketManager.getNewMessages()
       .then(messages => {
         const messageCount = messages.messages.length
         this._context.newMessages = messages.messages
 
+        this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
+          .then(() => {
+            if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
+            else this._context.setState(new StateTransactionEnd(this._context))
+          })
+          .catch(() => {})
+
         if (messageCount > 0) {
-          this._context.soundManager.playSoundTTS(`Sie haben ${messageCount} neue Nachrichten.`)
+
+        }
+        else {
+          this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
             .then(() => this._context.setState(new StateReadMessage(this._context)))
             .catch(() => {})
         }
-        else this._context.setState(new StateNoMessages(this._context))
       })
-  }
-}
-
-/**
- * There are no new messages.
- */
-class StateNoMessages extends PhoneState {
-  _init () {
-    this._context.soundManager.playSoundTTS('Keine neuen Nachrichten.')
-      .then(() => this._context.setState(new StateIdle(this._context)))
-      .catch(() => {})
   }
 }
 
@@ -140,13 +154,29 @@ class StateReadMessage extends PhoneState {
     const message = this._context.newMessages.shift()
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
-      this._context.soundManager.playSoundTTS(`Nachricht vom ${ new Date(message.date).toLocaleString('de', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' }) }`)
+      this._context.soundManager.playSoundTTS(
+        i18n.__('messageHeader', {
+          date: message.date.toISOString().substr(0,10),
+          time: message.date.toTimeString().substring(0,5)
+        })
+      )
         .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateExpectResponse(this._context)))
         .catch((e) => console.log(e))
     } else {
-      this._context.setState(new StateNoMessages(this._context))
+      this._context.setState(new StateNoMoreMessages(this._context))
     }
+  }
+}
+
+/**
+ * There are no new messages.
+ */
+class StateNoMoreMessages extends PhoneState {
+  _init () {
+    this._context.soundManager.playSoundTTS(i18n.__('noMoreMessages'))
+      .then(() => this._context.setState(new StateTransactionEnd(this._context)))
+      .catch(() => {})
   }
 }
 
@@ -155,7 +185,7 @@ class StateReadMessage extends PhoneState {
  */
 class StateExpectResponse extends PhoneState {
   _init () {
-    this._context.soundManager.playSoundTTS(`Ende der Nachricht. Wählen Sie Ihre gewünschte Reaktion oder wählen Sie Raute, um die Nachricht zu wiederholen.`)
+    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'))
       .catch(() => {})
   }
 
@@ -167,6 +197,14 @@ class StateExpectResponse extends PhoneState {
       this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
         .then(() => this._context.setState(new StateReadMessage(this._context)))
     }
+  }
+}
+
+/**
+ * I have nothing more to say.
+ */
+class StateTransactionEnd extends PhoneState {
+  _init () {
   }
 }
 

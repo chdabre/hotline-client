@@ -4,7 +4,7 @@ export function getLocalRef () {
   return new Promise(((resolve, reject) =>{
     exec('git rev-parse HEAD', function(err, stdout) {
       if (!err) {
-        resolve(stdout)
+        resolve(stdout.substr(0,40))
       } else {
         reject(err)
       }
