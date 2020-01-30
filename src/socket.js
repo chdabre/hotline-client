@@ -1,6 +1,6 @@
 import EventEmitter from 'events'
 import io from 'socket.io-client'
-import GpioManager from './io'
+import GpioManager from './io.js'
 
 export default class SocketManager extends EventEmitter {
   static get SOCKET_URL () { return process.env.SOCKET_URL || 'http://hotline.imakethings.ch' }
