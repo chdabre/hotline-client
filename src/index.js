@@ -63,6 +63,7 @@ class PhoneContext {
     this.socketManager.on('messages', msg => {
       this.gpioManager.setLed(msg.hasMessages ? GpioManager.LED_ON : GpioManager.LED_OFF)
       this.newMessages = msg.messages
+      this._state.onUpdate()
     })
   }
 
@@ -111,6 +112,7 @@ class PhoneState {
     this._context.setState(new StateIdle(this._context))
   }
   onNotify () {}
+  onUpdate () {}
 
   onDialInput(input) { console.log(`[DIAL] ${input}`) }
 }
@@ -156,7 +158,7 @@ class StateGreeting extends PhoneState {
  */
 class StateReadMessage extends PhoneState {
   _init () {
-    const message = this._context.newMessages.shift()
+    const message = this._context.newMessages[0]
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(
@@ -193,9 +195,9 @@ class StateExpectResponse extends PhoneState {
   }
 
   onDialInput (input) {
-    if (input === '#') this._context.newMessages.unshift(this._context.currentMessage)
+    if (input === '#') {}
     else this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
-    this._context.setState(new StateReadMessage(this._context))
+    this._context.setState(new StateWaitForUpdate(this._context, new StateReadMessage(this._context)))
   }
 }
 
@@ -209,6 +211,17 @@ class StateTransactionEnd extends PhoneState {
         return hasUpdate ? this._context.soundManager.playSoundTTS(i18n.__('updateAvailable')) : Promise.resolve()
       })
       .catch(() => {})
+  }
+}
+
+class StateWaitForUpdate extends PhoneState {
+  constructor (context, nextState) {
+    super(context)
+    this.nextState = nextState
+  }
+
+  onNotify () {
+    this._context.setState(this.nextState)
   }
 }
 
