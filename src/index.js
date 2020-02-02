@@ -63,8 +63,8 @@ class PhoneContext {
     this.socketManager.on('messages', msg => {
       this.gpioManager.setLed(msg.hasMessages ? GpioManager.LED_ON : GpioManager.LED_OFF)
       this.newMessages = msg.messages
-      this._state.onUpdate()
       console.log('[MESSAGES] new message count: ' + this.newMessages.length)
+      this._state.onUpdate()
     })
   }
 
@@ -197,7 +197,7 @@ class StateExpectResponse extends PhoneState {
 
   onDialInput (input) {
     if (input !== '#') this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
-    this._context.setState(new StateWaitForUpdate(this._context, new StateReadMessage(this._context)))
+    this._context.setState(new StateWaitForUpdate(this._context, StateReadMessage))
   }
 }
 
@@ -222,7 +222,7 @@ class StateWaitForUpdate extends PhoneState {
 
   onUpdate () {
     console.log('[WAIT FOR UPDATE] update received!')
-    this._context.setState(this.nextState)
+    this._context.setState(new this.nextState(this._context))
   }
 }
 
