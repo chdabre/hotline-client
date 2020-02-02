@@ -194,7 +194,7 @@ class StateExpectResponse extends PhoneState {
 
   onDialInput (input) {
     if (input === '#') this._context.newMessages.unshift(this._context.currentMessage)
-    else this._context.socketManager.sendRgeaction(this._context.currentMessage.id, input)
+    else this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
     this._context.setState(new StateReadMessage(this._context))
   }
 }
