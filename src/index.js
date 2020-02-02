@@ -29,7 +29,6 @@ class PhoneContext {
     this._setupListeners()
 
     this.newMessages = []
-    this.currentMessage = null
 
     /**
      * Initialize state
@@ -55,7 +54,15 @@ class PhoneContext {
 
     // Connection Initialization
     this.socketManager.on('init', msg => this._onInit(msg))
+
+    // New Message Notification
     this.socketManager.on('notify', () => this._state.onNotify())
+
+    // New Message data
+    this.socketManager.on('messages', msg => {
+      this.gpioManager.setLed(msg.hasMessages ? GpioManager.LED_ON : GpioManager.LED_OFF)
+      this.newMessages = msg.messages
+    })
   }
 
   /**
@@ -131,19 +138,13 @@ class StateGreeting extends PhoneState {
   _init () {
     this._context.pickRandomLocale()
 
-    this._context.socketManager.getNewMessages()
-      .then(messages => {
-        const messageCount = messages.messages.length
-        this._context.newMessages = messages.messages
-        this._context.gpioManager.setLed(messageCount > 0 ? GpioManager.LED_ON : GpioManager.LED_OFF)
-
-        this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
-          .then(() => {
-            if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
-            else this._context.setState(new StateTransactionEnd(this._context))
-          })
-          .catch(error => console.log(error))
+    const messageCount = this._context.newMessages.length
+    this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
+      .then(() => {
+        if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
+        else this._context.setState(new StateTransactionEnd(this._context))
       })
+      .catch(error => console.log(error))
   }
 }
 
@@ -189,13 +190,8 @@ class StateExpectResponse extends PhoneState {
   }
 
   onDialInput (input) {
-    if (input === '#') {
-      this._context.newMessages.unshift(this._context.currentMessage)
-      this._context.setState(new StateReadMessage(this._context))
-    } else {
-      this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
-        .then(() => this._context.setState(new StateReadMessage(this._context)))
-    }
+    if (input !== '#') this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
+    this._context.setState(new StateReadMessage(this._context))
   }
 }
 
@@ -206,9 +202,7 @@ class StateTransactionEnd extends PhoneState {
   _init () {
     checkForUpdates()
       .then(hasUpdate => {
-        if (hasUpdate) {
-          return this._context.soundManager.playSoundTTS(i18n.__('updateAvailable'))
-        } else return Promise.resolve()
+        return hasUpdate ? this._context.soundManager.playSoundTTS(i18n.__('updateAvailable')) : Promise.resolve()
       })
       .catch(() => {})
   }
