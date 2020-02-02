@@ -196,8 +196,7 @@ class StateExpectResponse extends PhoneState {
   }
 
   onDialInput (input) {
-    if (input === '#') {}
-    else this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
+    if (input !== '#') this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
     this._context.setState(new StateWaitForUpdate(this._context, new StateReadMessage(this._context)))
   }
 }
@@ -221,7 +220,7 @@ class StateWaitForUpdate extends PhoneState {
     this.nextState = nextState
   }
 
-  onNotify () {
+  onUpdate () {
     console.log('[WAIT FOR UPDATE] update received!')
     this._context.setState(this.nextState)
   }
