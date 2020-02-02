@@ -37,6 +37,7 @@ export default class SoundManager {
         decoder.stdout.pipe(player.stdin).on('error', () => {})
         this._currentPlayers.push(decoder)
       } else {
+        console.log('[MPLAYER] ' + filename)
         player = spawn('/usr/bin/mplayer', ['-ao', 'alsa:device=plug=dmix', '-cache', '16384', filename])
       }
       this._currentPlayers.push(player)
