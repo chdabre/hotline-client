@@ -29,6 +29,7 @@ class PhoneContext {
     this._setupListeners()
 
     this.newMessages = []
+    this.currentMessage = null
 
     /**
      * Initialize state
@@ -155,8 +156,9 @@ class StateGreeting extends PhoneState {
  */
 class StateReadMessage extends PhoneState {
   _init () {
-    const message = this._context.newMessages[0]
+    const message = this._context.newMessages.shift()
     if (typeof message !== 'undefined') {
+      this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(
         i18n.__('messageHeader', new Date(message.date).toLocaleString('de'))
       )
@@ -191,8 +193,8 @@ class StateExpectResponse extends PhoneState {
   }
 
   onDialInput (input) {
-    const message = this._context.newMessages[0]
-    if (input !== '#') this._context.socketManager.sendReaction(message.id, input)
+    if (input === '#') this._context.newMessages.unshift(this._context.currentMessage)
+    else this._context.socketManager.sendRgeaction(this._context.currentMessage.id, input)
     this._context.setState(new StateReadMessage(this._context))
   }
 }
