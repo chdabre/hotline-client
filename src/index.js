@@ -88,6 +88,8 @@ class PhoneContext {
     console.log(msg.hasMessages ? 'New messages available': 'No new messages.')
     this.soundManager.playSoundTTS(i18n.__('connected'))
       .catch(() => {})
+
+    this.ready = true
   }
 }
 
@@ -116,8 +118,8 @@ class PhoneState {
  * The "hung up" state - The handset is in the cradle and nothing is happening.
  */
 class StateIdle extends PhoneState {
-  onCradleUp (cradleState) {
-    this._context.setState(new StateGreeting(this._context))
+  onCradleUp () {
+    if (this._context.ready) this._context.setState(new StateGreeting(this._context))
   }
 
   _init () {
