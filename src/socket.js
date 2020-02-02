@@ -17,7 +17,7 @@ export default class SocketManager extends EventEmitter {
 
   _setupHandlers () {
     this._socket.on('connect', () => this._onConnect())
-    this._socket.on('notify', () => this._onNotify())
+    this._socket.on('notify', () => this.emit('notify'))
     this._socket.on('init', (msg) => this.emit('init', msg))
 
     this._socket.on('new_messages', (msg) => {
@@ -29,11 +29,6 @@ export default class SocketManager extends EventEmitter {
     this._socket.emit('init', {
       id: 'orange'
     })
-  }
-
-  _onNotify () {
-    this._context.gpioManager.setLed(GpioManager.LED_ON)
-    this._context.soundManager.playSound('./src/assets/ring.opus')
   }
 
   getNewMessages () {

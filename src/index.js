@@ -55,6 +55,7 @@ class PhoneContext {
 
     // Connection Initialization
     this.socketManager.on('init', msg => this._onInit(msg))
+    this.socketManager.on('notify', () => this._state.onNotify())
   }
 
   /**
@@ -99,6 +100,7 @@ class PhoneState {
   onCradleDown () {
     this._context.setState(new StateIdle(this._context))
   }
+  onNotify () {}
 
   onDialInput(input) { console.log(`[DIAL] ${input}`) }
 }
@@ -113,6 +115,12 @@ class StateIdle extends PhoneState {
 
   _init () {
     this._context.soundManager.stopAll()
+  }
+
+  onNotify () {
+    this._context.gpioManager.setLed(GpioManager.LED_ON)
+    this._context.soundManager.playSound('./src/assets/ring.opus')
+      .catch(() => {})
   }
 }
 
