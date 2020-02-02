@@ -64,6 +64,7 @@ class PhoneContext {
       this.gpioManager.setLed(msg.hasMessages ? GpioManager.LED_ON : GpioManager.LED_OFF)
       this.newMessages = msg.messages
       this._state.onUpdate()
+      console.log('[MESSAGES] new message count: ' + this.newMessages.length)
     })
   }
 
@@ -221,6 +222,7 @@ class StateWaitForUpdate extends PhoneState {
   }
 
   onNotify () {
+    console.log('[WAIT FOR UPDATE] update received!')
     this._context.setState(this.nextState)
   }
 }
