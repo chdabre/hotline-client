@@ -153,9 +153,8 @@ class StateGreeting extends PhoneState {
  */
 class StateReadMessage extends PhoneState {
   _init () {
-    const message = this._context.newMessages.shift()
+    const message = this._context.newMessages[this._context.newMessages.length - 1]
     if (typeof message !== 'undefined') {
-      this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(
         i18n.__('messageHeader', new Date(message.date).toLocaleString('de'))
       )
