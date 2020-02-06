@@ -12,13 +12,14 @@ export default class GpioManager extends EventEmitter {
   static get LED_OFF () { return Gpio.LOW }
 
   // Pins for rotary dial
-  static get DIAL_PIN () { return 19 } // Connects to the DIAL output of the rotary dial
-  static get PULSE_PIN () { return 18 } // Connects to the PULSE output of the rotary dial
+  static get DIAL_PIN () { return 6 } // Connects to the DIAL output of the rotary dial
+  static get PULSE_PIN () { return 3 } // Connects to the PULSE output of the rotary dial
 
   // Telephone-related pins
-  static get CRADLE_PIN () { return 14 } // Connects to the cradle switch
-  static get MUTE_PIN () { return 16 } // Connects to the mute switch
-  static get LED_PIN () { return 15 } // Connects to the led
+  static get CRADLE_PIN () { return 10 } // Connects to the cradle switch
+  static get MUTE_PIN () { return 11 } // Connects to the mute switch
+  static get LED_PIN () { return 12 } // Connects to the led
+  static get AMP_ENABLE_PIN (){ return 15 }
 
   constructor (context) {
     super()
@@ -42,6 +43,7 @@ export default class GpioManager extends EventEmitter {
     this._cradlePin = new Gpio(GpioManager.CRADLE_PIN, 'in', 'both', { debounceTimeout: 20 })
     this._mutePin = new Gpio(GpioManager.MUTE_PIN, 'in', 'both', { debounceTimeout: 20 })
     this._ledPin = new Gpio(GpioManager.LED_PIN, 'out')
+    this._ampEnablePin = new Gpio(GpioManager.AMP_ENABLE_PIN, 'out')
 
     // Ensure Pins are properly unexported when the module is unloaded
     process.on('SIGINT', _ => {
@@ -50,6 +52,7 @@ export default class GpioManager extends EventEmitter {
       this._cradlePin.unexport()
       this._mutePin.unexport()
       this._ledPin.unexport()
+      this._ampEnablePin.unexport()
     })
 
     this._startWatchingDial()
@@ -58,6 +61,9 @@ export default class GpioManager extends EventEmitter {
 
     // Initialize the LED as LOW
     this._ledPin.write(Gpio.LOW)
+      .catch(err => {})
+
+    this._ampEnablePin.write(Gpio.HIGH)
       .catch(err => {})
   }
 
