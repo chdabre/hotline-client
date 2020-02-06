@@ -132,7 +132,7 @@ class StateIdle extends PhoneState {
 
   onNotify () {
     this._context.gpioManager.setLed(GpioManager.LED_ON)
-    this._context.soundManager.playSound('./src/assets/ring.opus')
+    this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
       .catch(() => {})
   }
 }

@@ -10,6 +10,8 @@ export default class GpioManager extends EventEmitter {
   static get MUTE_ON () { return Gpio.LOW }
   static get LED_ON () { return Gpio.HIGH }
   static get LED_OFF () { return Gpio.LOW }
+  static get AMP_ON () { return Gpio.HIGH }
+  static get AMP_OFF () { return Gpio.LOW }
 
   // Pins for rotary dial
   static get DIAL_PIN () { return 6 } // Connects to the DIAL output of the rotary dial
@@ -63,7 +65,7 @@ export default class GpioManager extends EventEmitter {
     this._ledPin.write(Gpio.LOW)
       .catch(err => {})
 
-    this._ampEnablePin.write(Gpio.HIGH)
+    this._ampEnablePin.write(Gpio.LOW)
       .catch(err => {})
   }
 
@@ -138,5 +140,9 @@ export default class GpioManager extends EventEmitter {
 
   setLed (value) {
     return this._ledPin.write(value)
+  }
+
+  setAmp (value) {
+    return this._ampEnablePin.write(value)
   }
 }

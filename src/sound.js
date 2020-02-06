@@ -1,6 +1,7 @@
 import { spawn } from "child_process"
 import { promises as fsp } from 'fs'
 import TTSProvider from './tts.js'
+import GpioManager from './io.js'
 
 export default class SoundManager {
   constructor (context) {
@@ -23,8 +24,9 @@ export default class SoundManager {
     })
   }
 
-  playSound (filename, mplayer = false) {
+  playSound (filename, mplayer = false, amp = false) {
     if (process.env.DISABLE_HARDWARE) return new Promise((resolve => resolve(filename)))
+    if (amp) this._context.gpioManager.setAmp(GpioManager.AMP_ON).catch(() => {})
 
     return new Promise(((resolve, reject) => {
       // Don't attempt to open a player instance if you're not on a real device
@@ -45,6 +47,7 @@ export default class SoundManager {
       player.stdout.on('data', (out) => {})
       player.stderr.on('data', (err) => console.log('[PLAYER] ' + err.toString()))
       player.on('close', function (code) {
+        this._context.gpioManager.setAmp(GpioManager.AMP_OFF).catch(() => {})
         if (code > 0) reject(new Error('Process failed with code '  + code))
         else resolve(filename)
       })
@@ -53,6 +56,7 @@ export default class SoundManager {
 
   stopAll () {
     console.log(`[SOUND] Stop sound on ${ this._currentPlayers.length } players`)
+    this._context.gpioManager.setAmp(GpioManager.AMP_OFF).catch(() => {})
     this._currentPlayers.forEach(player => player.kill('SIGTERM'))
     this._currentPlayers = []
   }
