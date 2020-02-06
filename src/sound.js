@@ -47,16 +47,18 @@ export default class SoundManager {
       player.stdout.on('data', (out) => {})
       player.stderr.on('data', (err) => console.log('[PLAYER] ' + err.toString()))
       player.on('close', (code) => {
-        this._context.gpioManager.setAmp(GpioManager.AMP_OFF).catch(() => {})
         if (code > 0) reject(new Error('Process failed with code '  + code))
-        else resolve(filename)
+        else {
+          this._context.gpioManager.setAmp(GpioManager.AMP_OFF)
+            .then(() => resolve(filename))
+            .catch(() => {})
+        }
       })
     }))
   }
 
   stopAll () {
     console.log(`[SOUND] Stop sound on ${ this._currentPlayers.length } players`)
-    this._context.gpioManager.setAmp(GpioManager.AMP_OFF).catch(() => {})
     this._currentPlayers.forEach(player => player.kill('SIGTERM'))
     this._currentPlayers = []
   }
