@@ -12,8 +12,8 @@ export default class GpioManager extends EventEmitter {
   static get LED_OFF () { return Gpio.LOW }
 
   // Pins for rotary dial
-  static get DIAL_PIN () { return 3 } // Connects to the DIAL output of the rotary dial
-  static get PULSE_PIN () { return 6 } // Connects to the PULSE output of the rotary dial
+  static get DIAL_PIN () { return 6 } // Connects to the DIAL output of the rotary dial
+  static get PULSE_PIN () { return 3 } // Connects to the PULSE output of the rotary dial
 
   // Telephone-related pins
   static get CRADLE_PIN () { return 10 } // Connects to the cradle switch
