@@ -46,7 +46,7 @@ export default class SoundManager {
 
       player.stdout.on('data', (out) => {})
       player.stderr.on('data', (err) => console.log('[PLAYER] ' + err.toString()))
-      player.on('close', function (code) {
+      player.on('close', (code) => {
         this._context.gpioManager.setAmp(GpioManager.AMP_OFF).catch(() => {})
         if (code > 0) reject(new Error('Process failed with code '  + code))
         else resolve(filename)
