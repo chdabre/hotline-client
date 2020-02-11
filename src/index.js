@@ -89,9 +89,7 @@ class PhoneContext {
   _onInit (msg) {
     console.log('[PHONE] Sucessfully authorized with server.')
     console.log(msg.hasMessages ? 'New messages available': 'No new messages.')
-    this.soundManager.playSoundTTS(i18n.__('connected'))
-      .catch(() => {})
-
+    this.gpioManager.blinkLed(3).catch(() => {})
     this.ready = true
   }
 }
@@ -132,7 +130,11 @@ class StateIdle extends PhoneState {
 
   onNotify () {
     this._context.gpioManager.setLed(GpioManager.LED_ON)
-    this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
+    this._context.gpioManager.isMuted()
+      .then(isMuted => {
+        console.log(isMuted)
+        if (isMuted) return this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
+      })
       .catch(() => {})
   }
 }
