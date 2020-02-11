@@ -142,7 +142,7 @@ export default class GpioManager extends EventEmitter {
     return this._ledPin.write(value)
   }
 
-  async blinkLed (times, speed = 500, even = true) {
+  async blinkLed (times, speed = 200, even = true) {
     await this.setLed(even ? Gpio.HIGH : Gpio.LOW)
     if (times >= 0) {
       if (even) times--
