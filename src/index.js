@@ -242,7 +242,7 @@ class StateMenu extends PhoneState {
   onDialInput (input) {
     console.log(input)
     switch (input) {
-      case '❤':
+      case '❤️':
         this._context.soundManager.playSoundTTS(i18n.__('menu.restarting'))
           .then(() => utils.restart())
           .catch(() => {})
