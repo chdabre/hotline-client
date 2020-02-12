@@ -1,4 +1,5 @@
 import { exec } from "child_process"
+import ip from 'ip'
 
 export function getLocalRef () {
   return new Promise(((resolve, reject) =>{
@@ -24,7 +25,6 @@ export function getRemoteRef () {
   }))
 }
 
-
 export async function checkForUpdates () {
   return await getLocalRef() !== await getRemoteRef()
 }
@@ -45,4 +45,8 @@ export function shutdown () {
       else reject(error)
     }))
   }))
+}
+
+export function getIp () {
+  return ip.address()
 }
