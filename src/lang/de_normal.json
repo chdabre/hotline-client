@@ -7,5 +7,5 @@
   "messageHeader": "Nachricht vom %s.",
   "endOfMessage": "Ende der Nachricht. Wählen Sie Ihre gewünschte Reaktion oder wählen Sie Raute, um die Nachricht zu wiederholen.",
   "updateAvailable": "Eine neue Version ist verfügbar. Bitte starten Sie das System neu.",
-  "connected": "Verbunden."
+  "restarting": "Das System wird neu gestartet."
 }

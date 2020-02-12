@@ -28,3 +28,12 @@ export function getRemoteRef () {
 export async function checkForUpdates () {
   return await getLocalRef() !== await getRemoteRef()
 }
+
+export function restart () {
+  return new Promise(((resolve, reject) => {
+    exec('service hotline restart', ((error, stdout) => {
+      if (!error) resolve()
+      else reject(error)
+    }))
+  }))
+}

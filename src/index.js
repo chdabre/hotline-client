@@ -2,7 +2,7 @@ import i18n from 'i18n'
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
-import { checkForUpdates } from './utils.js'
+import { checkForUpdates, restart } from './utils.js'
 
 /**
  * Configure the mapping of emojis to the dialer.
@@ -222,6 +222,15 @@ class StateTransactionEnd extends PhoneState {
         return hasUpdate ? this._context.soundManager.playSoundTTS(i18n.__('updateAvailable')) : Promise.resolve()
       })
       .catch(() => {})
+  }
+
+  onDialInput (input) {
+    if (input === '#') {
+      i18n.setLocale('de_normal')
+      this._context.soundManager.playSoundTTS(i18n.__('restarting'))
+        .then(() => restart())
+        .catch(() => {})
+    }
   }
 }
 
