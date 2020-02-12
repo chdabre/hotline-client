@@ -98,8 +98,8 @@ class PhoneContext {
     this.ready = true
   }
 
-  _onMuteStateChange (value) {
-    if (value) {
+  _onMuteStateChange (isUnmuted) {
+    if (!isUnmuted) {
       this.gpioManager.blinkLed(2, 100).catch(() => {})
     }
   }
@@ -145,9 +145,9 @@ class StateIdle extends PhoneState {
 
   onNotify () {
     this._context.gpioManager.setLed(GpioManager.LED_ON)
-    this._context.gpioManager.isMuted()
-      .then(isMuted => {
-        if (isMuted) return this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
+    this._context.gpioManager.isUnmuted()
+      .then(isUnmuted => {
+        if (isUnmuted) return this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
       })
       .catch(() => {})
   }

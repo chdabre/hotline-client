@@ -132,7 +132,7 @@ export default class GpioManager extends EventEmitter {
     })
   }
 
-  isMuted () {
+  isUnmuted () {
     return this._mutePin.read()
   }
 
