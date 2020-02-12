@@ -132,11 +132,12 @@ class PhoneState {
  */
 class StateIdle extends PhoneState {
   onCradleUp () {
-    if (this._context.ready) {
-      this._context.soundManager.playSound('./src/assets/dialtone.opus', false)
-        .then(() => this._context.setState(new StateGreeting(this._context)))
-        .catch(() => {})
-    }
+    this._context.soundManager.playSound('./src/assets/dialtone.opus', false)
+      .then(() => {
+        if (this._context.ready) return this._context.setState(new StateGreeting(this._context))
+        else return this._context.soundManager.playSoundTTS(i18n.__('notConnected'))
+      })
+      .catch(() => {})
   }
 
   _init () {
