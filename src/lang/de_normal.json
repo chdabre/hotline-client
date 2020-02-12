@@ -7,5 +7,9 @@
   "messageHeader": "Nachricht vom %s.",
   "endOfMessage": "Ende der Nachricht. Wählen Sie Ihre gewünschte Reaktion oder wählen Sie Raute, um die Nachricht zu wiederholen.",
   "updateAvailable": "Eine neue Version ist verfügbar. Wählen Sie Raute, um das System jetzt neu zu starten.",
-  "restarting": "Das System wird neu gestartet."
+  "menu": {
+    "intro": "Für Aktualisieren und Neustarten wählen Sie Herz. Für Herunterfahren wählen Sie Raute.",
+    "restarting": "Das System wird neu gestartet.",
+    "shutdown": "Das System wird heruntergefahren."
+  }
 }

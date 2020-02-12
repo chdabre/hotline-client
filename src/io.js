@@ -6,8 +6,6 @@ export default class GpioManager extends EventEmitter {
   // State constants
   static get CRADLE_UP () { return Gpio.HIGH }
   static get CRADLE_DOWN () { return Gpio.LOW }
-  static get MUTE_OFF () { return Gpio.HIGH }
-  static get MUTE_ON () { return Gpio.LOW }
   static get LED_ON () { return Gpio.HIGH }
   static get LED_OFF () { return Gpio.LOW }
   static get AMP_ON () { return Gpio.HIGH }

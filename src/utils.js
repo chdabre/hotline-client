@@ -37,3 +37,12 @@ export function restart () {
     }))
   }))
 }
+
+export function shutdown () {
+  return new Promise(((resolve, reject) => {
+    exec('shutdown now', ((error, stdout) => {
+      if (!error) resolve()
+      else reject(error)
+    }))
+  }))
+}

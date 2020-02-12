@@ -2,7 +2,7 @@ import i18n from 'i18n'
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
-import { checkForUpdates, restart } from './utils.js'
+import * as utils from './utils.js'
 
 /**
  * Configure the mapping of emojis to the dialer.
@@ -217,7 +217,7 @@ class StateExpectResponse extends PhoneState {
  */
 class StateTransactionEnd extends PhoneState {
   _init () {
-    checkForUpdates()
+    utils.checkForUpdates()
       .then(hasUpdate => {
         return hasUpdate ? this._context.soundManager.playSoundTTS(i18n.__('updateAvailable')) : Promise.resolve()
       })
@@ -225,10 +225,28 @@ class StateTransactionEnd extends PhoneState {
   }
 
   onDialInput (input) {
+    if (input === '#') this._context.setState(new StateMenu(this._context))
+  }
+}
+
+/**
+ * Loads of different utility functions
+ */
+class StateMenu extends PhoneState {
+  _init () {
+    i18n.setLocale('de_normal')
+    this._context.soundManager.playSoundTTS(i18n.__('menu.intro'))
+      .catch(() => {})
+  }
+
+  onDialInput (input) {
     if (input === '#') {
-      i18n.setLocale('de_normal')
-      this._context.soundManager.playSoundTTS(i18n.__('restarting'))
-        .then(() => restart())
+      this._context.soundManager.playSoundTTS(i18n.__('menu.restarting'))
+        .then(() => utils.restart())
+        .catch(() => {})
+    } else if (input === '❤') {
+      this._context.soundManager.playSoundTTS(i18n.__('menu.shutdown'))
+        .then(() => utils.shutdown())
         .catch(() => {})
     }
   }
