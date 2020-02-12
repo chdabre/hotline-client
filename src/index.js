@@ -56,7 +56,7 @@ class PhoneContext {
     this.gpioManager.on('dial', value => this._state.onDialInput(dialConfig[value]))
 
     // Mute Events
-    this.gpioManager.on('mute', value => this._state._onMuteStateChange(value))
+    this.gpioManager.on('mute', value => this._onMuteStateChange(value))
 
     // Connection Initialization
     this.socketManager.on('init', msg => this._onInit(msg))
