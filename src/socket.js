@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import io from 'socket.io-client'
+import config from '../config.json'
 
 export default class SocketManager extends EventEmitter {
   static get SOCKET_URL () { return process.env.SOCKET_URL || 'http://hotline.imakethings.ch' }
@@ -23,7 +24,7 @@ export default class SocketManager extends EventEmitter {
 
   _onConnect () {
     this._socket.emit('init', {
-      id: 'orange'
+      id: config.client_id || 'debug'
     })
   }
 
