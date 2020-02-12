@@ -55,6 +55,9 @@ class PhoneContext {
     // Dial Events
     this.gpioManager.on('dial', value => this._state.onDialInput(dialConfig[value]))
 
+    // Mute Events
+    this.gpioManager.on('mute', value => this._state._onMuteStateChange(value))
+
     // Connection Initialization
     this.socketManager.on('init', msg => this._onInit(msg))
 
@@ -93,6 +96,12 @@ class PhoneContext {
     console.log(msg.hasMessages ? 'New messages available': 'No new messages.')
     this.gpioManager.blinkLed(3).catch(() => {})
     this.ready = true
+  }
+
+  _onMuteStateChange (value) {
+    if (value) {
+      this.gpioManager.blinkLed(2, 100).catch(() => {})
+    }
   }
 }
 
