@@ -23,7 +23,8 @@ class PhoneContext {
     i18n.configure({
       locales: ['de_normal'],
       defaultLocale: 'de_normal',
-      directory: 'src/lang'
+      directory: 'src/lang',
+      objectNotation: true
     })
     i18n.setLocale('de_normal')
 
@@ -240,14 +241,17 @@ class StateMenu extends PhoneState {
   }
 
   onDialInput (input) {
-    if (input === '#') {
-      this._context.soundManager.playSoundTTS(i18n.__('menu.restarting'))
-        .then(() => utils.restart())
-        .catch(() => {})
-    } else if (input === '❤') {
-      this._context.soundManager.playSoundTTS(i18n.__('menu.shutdown'))
-        .then(() => utils.shutdown())
-        .catch(() => {})
+    switch (input) {
+      case '❤':
+        this._context.soundManager.playSoundTTS(i18n.__('menu.restarting'))
+          .then(() => utils.restart())
+          .catch(() => {})
+        break
+      case '#':
+        this._context.soundManager.playSoundTTS(i18n.__('menu.shutdown'))
+          .then(() => utils.shutdown())
+          .catch(() => {})
+        break
     }
   }
 }
