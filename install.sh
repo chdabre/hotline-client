@@ -2,7 +2,7 @@
 
 cd /root/hotline-client || exit
 git pull
-mkdir media
+mkdir -p media
 cp hotline.service /etc/systemd/system
 systemctl daemon-reload
 systemctl start hotline
