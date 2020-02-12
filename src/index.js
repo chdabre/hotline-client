@@ -121,7 +121,11 @@ class PhoneState {
  */
 class StateIdle extends PhoneState {
   onCradleUp () {
-    if (this._context.ready) this._context.setState(new StateGreeting(this._context))
+    if (this._context.ready) {
+      this._context.soundManager.playSound('./src/assets/dialtone.opus', false)
+        .then(() => this._context.setState(new StateGreeting(this._context)))
+        .catch(() => {})
+    }
   }
 
   _init () {
