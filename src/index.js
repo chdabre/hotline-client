@@ -139,7 +139,6 @@ class StateIdle extends PhoneState {
     this._context.gpioManager.setLed(GpioManager.LED_ON)
     this._context.gpioManager.isMuted()
       .then(isMuted => {
-        console.log(isMuted)
         if (isMuted) return this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
       })
       .catch(() => {})
@@ -242,6 +241,7 @@ class StateMenu extends PhoneState {
   }
 
   onDialInput (input) {
+    console.log(input)
     switch (input) {
       case '❤':
         this._context.soundManager.playSoundTTS(i18n.__('menu.restarting'))
