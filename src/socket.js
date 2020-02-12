@@ -17,6 +17,7 @@ export default class SocketManager extends EventEmitter {
 
   _setupHandlers () {
     this._socket.on('connect', () => this._onConnect())
+    this._socket.on('disconnect', () => this.emit('disconnect'))
     this._socket.on('notify', () => this.emit('notify'))
     this._socket.on('init', (msg) => this.emit('init', msg))
     this._socket.on('messages', (msg) => this.emit('messages', msg))

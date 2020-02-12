@@ -60,6 +60,9 @@ class PhoneContext {
 
     // Connection Initialization
     this.socketManager.on('init', msg => this._onInit(msg))
+    this.socketManager.on('disconnect', msg => {
+      this.ready = false
+    })
 
     // New Message Notification
     this.socketManager.on('notify', () => this._state.onNotify())
