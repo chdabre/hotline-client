@@ -21,4 +21,4 @@ yarn-error.log*
 *.sw*
 
 google-cloud-credentials.json
-config.json
+config.js
