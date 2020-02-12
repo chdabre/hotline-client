@@ -3,7 +3,6 @@ import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
 import * as utils from './utils.js'
-import { getIp } from './utils'
 
 /**
  * Configure the mapping of emojis to the dialer.
@@ -249,7 +248,7 @@ class StateMenu extends PhoneState {
           .catch(() => {})
         break
       case '😂':
-        this._context.soundManager.playSoundTTS(i18n.__('menu.ip', getIp()))
+        this._context.soundManager.playSoundTTS(i18n.__('menu.ip', utils.getIp()))
           .then(() => utils.restart())
           .catch(() => {})
         break
