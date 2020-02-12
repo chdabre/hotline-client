@@ -2,7 +2,7 @@
 Description=Hotline Client
 
 [Service]
-ExecStart=/root/startup.sh
+ExecStart=/root/hotline-client/startup.sh
 Restart=on-failure
 
 [Install]
