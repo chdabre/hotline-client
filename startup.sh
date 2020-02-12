@@ -4,6 +4,7 @@ export PATH=/root/.nvm/versions/node/v13.5.0/bin:/usr/local/sbin:/usr/local/bin:
 export GOOGLE_APPLICATION_CREDENTIALS=/root/hotline-client/google-cloud-credentials.json
 
 cd /root/hotline-client || exit
+git reset --hard HEAD
 git pull
 yarn
 
