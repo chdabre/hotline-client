@@ -6,4 +6,4 @@ mkdir -p media
 cp config-example.json config.json
 cp hotline.service /etc/systemd/system
 systemctl daemon-reload
-systemctl start hotline
+systemctl restart hotline
