@@ -249,7 +249,6 @@ class StateMenu extends PhoneState {
         break
       case '😂':
         this._context.soundManager.playSoundTTS(i18n.__('menu.ip', utils.getIp()))
-          .then(() => utils.restart())
           .catch(() => {})
         break
       case '#':
