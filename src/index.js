@@ -1,4 +1,5 @@
 import i18n from 'i18n'
+import Chance from 'chance'
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
 import SocketManager from './socket.js'
@@ -21,7 +22,6 @@ class PhoneContext {
     this.socketManager = new SocketManager(this)
 
     i18n.configure({
-      locales: ['de_normal', 'de_yoda', 'dog_of_wisdom'],
       defaultLocale: 'de_normal',
       directory: 'src/lang',
       objectNotation: true
@@ -88,8 +88,9 @@ class PhoneContext {
    * Set the i18n locale to a random available locale.
    */
   pickRandomLocale () {
-    const locales = i18n.getLocales()
-    const locale = locales[(Math.random() * locales.length) | 0]
+    const locales = ['de_normal', 'de_yoda', 'dog_of_wisdom']
+    const weights = [10, 2, 1]
+    const locale = new Chance().weighted(locales, weights)
     i18n.setLocale(locale)
     console.log(`[LOCALE] ${locale}`)
   }

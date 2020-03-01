@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^2.1.1",
+    "chance": "^1.1.4",
     "i18n": "^0.8.5",
     "ip": "^1.1.5",
     "onoff": "^5.0.1",
