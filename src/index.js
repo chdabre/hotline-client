@@ -167,7 +167,6 @@ class StateGreeting extends PhoneState {
     this._context.pickRandomLocale()
 
     const messageCount = this._context.newMessages.length
-    console.log(i18n.__n('greeting', 'greeting', messageCount))
     this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
       .then(() => {
         if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
