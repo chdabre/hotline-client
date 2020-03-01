@@ -1,0 +1,10 @@
+{
+  "greeting": {
+    "one": "<prosody rate=\"slow\" pitch=\"x-low\">Glück du hast. Eine neue Nachricht du hast.</prosody>\n",
+    "other": "[0] <prosody rate=\"slow\" pitch=\"x-low\">Unbeliebt du bist. Niemand mit dir sprechen will.</prosody> | [2,] <prosody rate=\"slow\" pitch=\"x-low\">Oh, eine Ehre es ist, zu hören dich nach langer Zeit. %s neue Nachrichten du hast.</prosody>"
+  },
+  "noMoreMessages": "<prosody rate=\"slow\" pitch=\"x-low\">Keine weiteren Nachrichten ich habe. Aber Weisheit:<break strength=\"medium\" />Gebranntes Kind hat knusprige Finger.</prosody>",
+  "messageHeader": "<prosody rate=\"slow\" pitch=\"x-low\">In dein Herz hören du musst. Die nächste Nachricht hören auch.</prosody>",
+  "endOfMessage": "<prosody rate=\"slow\" pitch=\"x-low\">Dein Freund eine Antwort erwartet. Melden du dich musst. Das Rad drehen du sollst.</prosody>",
+  "updateAvailable": "<prosody rate=\"slow\" pitch=\"x-low\">Eine Nachricht aus der Zukunft ich spüre. Ein Update es ist.</prosody>"
+}
