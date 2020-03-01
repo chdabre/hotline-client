@@ -21,7 +21,7 @@ class PhoneContext {
     this.socketManager = new SocketManager(this)
 
     i18n.configure({
-      locales: ['de_normal', 'yoda', 'dog_of_wisdom'],
+      locales: ['de_normal', 'de_yoda', 'dog_of_wisdom'],
       defaultLocale: 'de_normal',
       directory: 'src/lang',
       objectNotation: true
