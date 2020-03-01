@@ -139,6 +139,7 @@ class StateIdle extends PhoneState {
       .then(() => {
         if (this._context.ready) return this._context.setState(new StateGreeting(this._context))
         else return this._context.soundManager.playSoundTTS(i18n.__('notConnected'))
+          .then(() => this._context.setState(new StateMenu(this._context())))
       })
       .catch(() => {})
   }
