@@ -1,0 +1,11 @@
+{
+  "voice": "en-US-Wavenet-F",
+  "greeting": {
+    "one": "<prosody rate=\"105%\" pitch=\"-2st\">Get on your knees and beg while I play this message for you, you pathetic little fuckhole.</prosody>",
+    "other": "[0] <prosody rate=\"105%\" pitch=\"-2st\">How dare you disturb your mistress! You don't have a message but you do have a chore: Lick my laced up boots you wimp!</prosody> | [2,] <prosody rate=\"105%\" pitch=\"-2st\">You actually have %s messages, you disgusting little cuck. Listen to them and don't flinch while I torture your balls!</prosody>"
+  },
+  "noMoreMessages": "  <prosody rate=\"105%\" pitch=\"-2st\">You don't deserve any more messages! Now turn around so I can punish your greedy little asshole!</prosody>",
+  "messageHeader": "<prosody rate=\"105%\" pitch=\"-2st\">That message is from %s you whorish little man!</prosody>",
+  "endOfMessage": "  <prosody rate=\"105%\" pitch=\"-2st\">That was the message. Now you better dial your reaction fast before i tighten the ropes around your hands again and step on your balls. Dial the hash if you need to hear the message again, because you are a little cuck that hasn't yet learned how to pay attention.</prosody>",
+  "updateAvailable": "<prosody rate=\"105%\" pitch=\"-2st\">There's a new version to update to, you pathetic spineless wimp. Dial the hash for options or I swear I will put you back in your cage. And I will only let you out once you prove that you are a worthy sex slave.</prosody>"
+}
