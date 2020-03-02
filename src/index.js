@@ -97,7 +97,9 @@ class PhoneContext {
       'de_uplifting': 1,
       'de_sponsored': 1,
       'en_fes': 1,
-      'dog_of_wisdom': 1
+      'dog_of_wisdom': 1,
+      'en_dom': 1,
+      'en_sub': 1
     }
     const locale = new Chance().weighted(Object.keys(locales), Object.values(locales))
     i18n.setLocale(locale)
