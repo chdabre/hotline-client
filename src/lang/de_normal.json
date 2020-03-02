@@ -1,17 +1,18 @@
 {
+  "voice": "de-DE-Wavenet-C",
   "greeting": {
-    "one": "Hallo. Sie haben eine neue Nachricht.",
-    "other": "[0] Hallo. Sie haben keine neuen Nachrichten. | [2,] Hallo. Sie haben %s neue Nachrichten."
-  },
-  "noMoreMessages": "Keine weiteren Nachrichten.",
-  "messageHeader": "Nachricht vom %s.",
-  "endOfMessage": "Ende der Nachricht. Wählen Sie Ihre gewünschte Reaktion oder wählen Sie Raute, um die Nachricht zu wiederholen.",
-  "updateAvailable": "Eine neue Version ist verfügbar. Wählen Sie Raute für weitere Optionen.",
-  "notConnected": "Nicht verbunden.",
-  "menu": {
-    "intro": "Für Aktualisieren und Neustarten wählen Sie Herz. Für die IP-Adresse wählen sie Tränen-Lachen. Für Herunterfahren wählen Sie Raute.",
-    "restarting": "Das System wird neu gestartet.",
-    "shutdown": "Das System wird heruntergefahren.",
-    "ip": "Die lokale IP-Adresse ist <say-as interpret-as=\"verbatim\">%s</say-as>"
-  }
+		"one": "Hallo. Sie haben eine neue Nachricht.",
+		"other": "[0] Hallo. Sie haben keine neuen Nachrichten. | [2,] Hallo. Sie haben %s neue Nachrichten."
+	},
+	"noMoreMessages": "Keine weiteren Nachrichten.",
+	"messageHeader": "Nachricht vom %s.",
+	"endOfMessage": "Ende der Nachricht. Wählen Sie Ihre gewünschte Reaktion oder wählen Sie Raute, um die Nachricht zu wiederholen.",
+	"updateAvailable": "Eine neue Version ist verfügbar. Wählen Sie Raute für weitere Optionen.",
+	"notConnected": "Nicht verbunden.",
+	"menu": {
+		"intro": "Für Aktualisieren und Neustarten wählen Sie Herz. Für die IP-Adresse wählen sie Tränen-Lachen. Für Herunterfahren wählen Sie Raute.",
+		"restarting": "Das System wird neu gestartet.",
+		"shutdown": "Das System wird heruntergefahren.",
+		"ip": "Die lokale IP-Adresse ist <say-as interpret-as=\"verbatim\">%s</say-as>"
+	}
 }

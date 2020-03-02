@@ -11,10 +11,10 @@ export default class SoundManager {
     this._currentPlayers = []
   }
 
-  playSoundTTS (text, cache = true) {
-    if (!this._ttsProvider) this._ttsProvider = new TTSProvider({ name: 'de-DE-Wavenet-C', languageCode: 'de-DE' })
+  playSoundTTS (text, voiceName = 'de-DE-Wavenet-C', cache = true) {
+    const ttsProvider = new TTSProvider({ name: voiceName, languageCode: 'de-DE' })
     return new Promise((resolve, reject) => {
-      this._ttsProvider.makeTTSRequest(text)
+      ttsProvider.makeTTSRequest(text)
         .then(filename => this.playSound(filename))
         .then(filename => {
           if (!cache) fsp.unlink(filename).then(() => resolve())

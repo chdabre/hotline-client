@@ -1,4 +1,5 @@
 {
+  "voice": "de-DE-Wavenet-C",
   "greeting": {
     "one": "<prosody rate=\"slow\" pitch=\"x-low\">Glück du hast. Eine neue Nachricht du hast.</prosody>\n",
     "other": "[0] <prosody rate=\"slow\" pitch=\"x-low\">Unbeliebt du bist. Niemand mit dir sprechen will.</prosody> | [2,] <prosody rate=\"slow\" pitch=\"x-low\">Oh, eine Ehre es ist, zu hören dich nach langer Zeit. %s neue Nachrichten du hast.</prosody>"

@@ -6,6 +6,7 @@ i18n.configure({
 
 i18n.setLocale('de_normal')
 
+console.log(i18n.__('voice'))
 console.log(i18n.__n('greeting', 'greeting', 0))
 console.log(i18n.__n('greeting', 'greeting', 1))
 console.log(i18n.__n('greeting', 'greeting', 15))

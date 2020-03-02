@@ -1,4 +1,5 @@
 {
+  "voice": "de-DE-Wavenet-C",
   "greeting": "<audio src=\"https://hotline.imakethings.ch/sound/bahbababa.mp3\"/>",
   "noMoreMessages": "<audio src=\"https://hotline.imakethings.ch/sound/bah.mp3\"/>",
   "messageHeader": "<audio src=\"https://hotline.imakethings.ch/sound/hababadagada.mp3\"/>",

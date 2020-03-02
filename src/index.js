@@ -167,7 +167,10 @@ class StateGreeting extends PhoneState {
     this._context.pickRandomLocale()
 
     const messageCount = this._context.newMessages.length
-    this._context.soundManager.playSoundTTS(i18n.__n('greeting', 'greeting', messageCount))
+    this._context.soundManager.playSoundTTS(
+      i18n.__n('greeting', 'greeting', messageCount),
+      i18n.__('voice')
+    )
       .then(() => {
         if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
         else this._context.setState(new StateTransactionEnd(this._context))
@@ -185,7 +188,9 @@ class StateReadMessage extends PhoneState {
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(
-        i18n.__('messageHeader', new Date(message.date).toLocaleString('de'))
+        i18n.__('messageHeader', new Date(message.date).toLocaleString('de')),
+        i18n.__('voice'),
+        false
       )
         .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateExpectResponse(this._context)))
@@ -202,7 +207,10 @@ class StateReadMessage extends PhoneState {
 class StateNoMoreMessages extends PhoneState {
   _init () {
     this._context.gpioManager.setLed(GpioManager.LED_OFF)
-    this._context.soundManager.playSoundTTS(i18n.__('noMoreMessages'))
+    this._context.soundManager.playSoundTTS(
+      i18n.__('noMoreMessages'),
+      i18n.__('voice')
+    )
       .then(() => this._context.setState(new StateTransactionEnd(this._context)))
       .catch(() => {})
   }
@@ -213,7 +221,7 @@ class StateNoMoreMessages extends PhoneState {
  */
 class StateExpectResponse extends PhoneState {
   _init () {
-    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'))
+    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'))
       .catch(() => {})
   }
 
@@ -234,7 +242,10 @@ class StateTransactionEnd extends PhoneState {
   _init () {
     utils.checkForUpdates()
       .then(hasUpdate => {
-        return hasUpdate ? this._context.soundManager.playSoundTTS(i18n.__('updateAvailable')) : Promise.resolve()
+        return hasUpdate ? this._context.soundManager.playSoundTTS(
+          i18n.__('updateAvailable'),
+          i18n.__('voice')
+        ) : Promise.resolve()
       })
       .catch(() => {})
   }
