@@ -1,0 +1,11 @@
+{
+  "voice": "de-DE-Wavenet-C",
+  "greeting": {
+		"one": "<prosody rate=\"slow\" pitch=\"+1st\">Atme gut durch. Hast du heute schon an dich gedacht? Jemand hat an dich gedacht und dir eine Nachricht gesendet.</prosody>",
+		"other": "[0] <prosody rate=\"slow\" pitch=\"+1st\">Du bist Frei! <break/> Du schuldest niemandem etwas. Nimm dir eine Minute für dich. Die Welt liebt dich.</prosody> | [2,] <prosody rate=\"slow\" pitch=\"+1st\">Deine Freunde lieben dich! Sie haben %s neue Nachrichten hinterlassen! Hast du heute schon gelächelt?</prosody>"
+	},
+	"noMoreMessages": "<prosody rate=\"slow\" pitch=\"+1st\">Das waren alle Nachrichten. Jetzt geh und gönn dir was. Ein Brausebad? oder was gutes zu essen? Mach was dir gefällt.</prosody>",
+	"messageHeader": "<prosody rate=\"slow\" pitch=\"+1st\">Diese Nachricht hat ein schöner mensch dir am %s gesendet.</prosody>",
+	"endOfMessage": "<prosody rate=\"slow\" pitch=\"+1st\">Was für eine schöne Nachricht! Ich hoffe dem Absender geht es gut, und dir auch. Du kannst jetzt mit einem Emoji antworten. Ganz nach deinem Gefühl. Oder wenn du dir die Zeit nehmen willst, um die Nachricht noch einmal zu hören, wähle die Raute. Alles ist möglich. Du bist frei wie ein Vogel!</prosody>",
+	"updateAvailable": "<prosody rate=\"slow\" pitch=\"+1st\">Wie schön! Es ist ein Update verfügbar. Was wird es wohl neues geben? Finden wir es zusammen heraus. Wähle einfach die Raute. Oder mach es ein anderes mal. Du hast Zeit.</prosody>"
+}
