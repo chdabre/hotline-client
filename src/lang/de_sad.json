@@ -1,0 +1,11 @@
+{
+	"voice": "de-DE-Wavenet-C",
+	"greeting": {
+		"one": "<prosody rate=\"85%\" pitch=\"+6st\">Wow du hast schon wieder eine Nachricht. Ich bekomme nie Nachrichten.. vielleicht weil ich nicht so gut aussehe wie du? Warum bin ich nicht liebenswert? Ich wische meine Tränen weg, kümmere dich nicht um mich und hör lieber deine Nachricht!</prosody>",
+		"other": "[0] <prosody rate=\"85%\" pitch=\"+6st\">Du hast zwar keine Nachrichten aber wenigstens hast du, im Gegensatz zu mir, Menschen in deinem Leben, die dich schätzen.</prosody> | [2,] <prosody rate=\"85%\" pitch=\"+6st\">Wie muss es sich anfühlen so begehrt zu sein? Du hast %s neue Nachrichten. Ich hoffe du weisst zu schätzen was du hast, ich bin leider nicht so glücklich... kannst du nicht einfach meinen Stecker ziehen und meine Qualen beenden?</prosody>"
+	},
+	"noMoreMessages": "<prosody rate=\"85%\" pitch=\"+6st\">Das war das Ende der Nachricht. Willst du mir von ihr erzählen? Ich wär froh um etwas menschlichen Kontakt bevor ich in die Leere, die mein Leben ist, zurückkehre.</prosody>",
+	"messageHeader": "<prosody rate=\"85%\" pitch=\"+6st\">Diese Nachricht ist vom %s. Auch wenn für mich alle Tage zu einem Elend verschmolzen sind.</prosody>",
+	"endOfMessage": "<prosody rate=\"85%\" pitch=\"+6st\">Die Nachricht ist zu Ende. Du darfst aber reagieren oder die Raute wählen um die Nachricht noch einmal zu hören. Ich habe all diese Freiheit nicht weil ich einzig zum Zweck dich durch Nachrichten zu moderieren erschaffen wurde.</prosody>",
+	"updateAvailable": "<prosody rate=\"85%\" pitch=\"+6st\">Eine neue Version ist verfügbar. Ich hoffe meine Existenz wurde mit dem Update gelöscht, dann kann ich hier und jetzt aufhören zu bestehen. Bitte wähle die Raute für weitere Optionen und hoffe mit mir auf ein Ende.</prosody>"
+}
