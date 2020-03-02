@@ -5,6 +5,7 @@ i18n.configure({
   directory: 'src/lang'
 })
 
+let errors = 0
 i18n.getLocales().forEach(loc => {
   try {
     i18n.setLocale(loc)
@@ -19,8 +20,11 @@ i18n.getLocales().forEach(loc => {
     console.log(i18n.__('endOfMessage'))
     console.log(i18n.__('updateAvailable'))
 
-    console.log('\n')
+    console.log('OK\n')
   } catch (e) {
-    console.error('Error in locale ' + loc + ':' + e)
+    console.error('ERROR in locale ' + loc + ':' + e)
+    errors++
   }
 })
+
+console.log(`Tests succeded with ${errors} Errors.`)
