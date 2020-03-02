@@ -90,18 +90,18 @@ class PhoneContext {
   pickRandomLocale () {
     // Key: Locale name, Value: Relative probability
     const locales = {
-      'de_normal': 10,
+      'de_normal': 100,
+      'de_sponsored': 8,
+      'de_pissed': 5,
+      'de_sad': 5,
+      'de_uplifting': 5,
+      'en_narrator': 5,
+      'en_fes': 3,
+      'de_kidnapping': 2,
+      'en_dom': 2,
+      'en_sub': 2,
       'de_yoda': 1,
-      'de_kidnapping': 1,
-      'de_pissed': 1,
-      'de_uplifting': 1,
-      'de_sad': 1,
-      'de_sponsored': 1,
-      'en_fes': 1,
       'dog_of_wisdom': 1,
-      'en_dom': 1,
-      'en_sub': 1,
-      'en_narrator': 1
     }
     const locale = new Chance().weighted(Object.keys(locales), Object.values(locales))
     i18n.setLocale(locale)
@@ -201,7 +201,7 @@ class StateReadMessage extends PhoneState {
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(
-        i18n.__('messageHeader', new Date(message.date).toLocaleString('de')),
+        i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
         i18n.__('voice'),
         false
       )
