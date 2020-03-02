@@ -92,10 +92,12 @@ class PhoneContext {
       'de_normal',
       'de_yoda',
       'de_kidnapping',
+      'de_pissed',
       'dog_of_wisdom'
     ]
     const weights = [
       10,
+      1,
       1,
       1,
       1
