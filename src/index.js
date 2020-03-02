@@ -95,6 +95,7 @@ class PhoneContext {
       'de_kidnapping': 1,
       'de_pissed': 1,
       'de_uplifting': 1,
+      'de_sponsored': 1,
       'en_fes': 1,
       'dog_of_wisdom': 1
     }
