@@ -1,12 +1,12 @@
 {
   "voice": "de-DE-Wavenet-C",
   "greeting": {
-		"one": "<prosody rate=\"110%\" pitch=\"+2st\">Hallo! Schön dich zu hören. Diese Nachricht ist gesponsert von Bio Brause! Mach ne Pause, mit Bio Brause! <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody>",
-		"other": "[0] <prosody rate=\"110%\" pitch=\"+2st\">Hallo! Du hast zwar keine Nachrichten, aber was du immer hören kannst, sind spannende Hörbücher von Audible! Audible, das hört jeder. <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody> | [2,] <prosody rate=\"110%\" pitch=\"+2st\">Wow, du hast heute %s neue Nachrichten. Wie ich mit dem Stress umgehe? Crystal Meth. Crystal Meth: Haut deine Probleme ins Weltall! <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/>"
+		"one": "<prosody rate=\"110%%\" pitch=\"+2st\">Hallo! Schön dich zu hören. Diese Nachricht ist gesponsert von Bio Brause! Mach ne Pause, mit Bio Brause! <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody>",
+		"other": "[0] <prosody rate=\"110%%\" pitch=\"+2st\">Hallo! Du hast zwar keine Nachrichten, aber was du immer hören kannst, sind spannende Hörbücher von Audible! Audible, das hört jeder. <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody> | [2,] <prosody rate=\"110%%\" pitch=\"+2st\">Wow, du hast heute %s neue Nachrichten. Wie ich mit dem Stress umgehe? Crystal Meth. Crystal Meth: Haut deine Probleme ins Weltall! <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/>"
 	},
 	"noMoreMessages": "<prosody rate=\"110%\" pitch=\"+2st\">Das waren deine Nachrichten. Präsentiert von der FHNW Cafeteria. Der günstigste Kaffee im Aargau! <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody>",
-	"messageHeader": "<prosody rate=\"110%\" pitch=\"+2st\">Die nächste Nachricht vom %s wird dir präsentiert von Nestle. Nestle: Für die kinder das Beste. <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody>",
+	"messageHeader": "<prosody rate=\"110%%\" pitch=\"+2st\">Die nächste Nachricht vom %s wird dir präsentiert von Nestle. Nestle: Für die kinder das Beste. <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody>",
 	"endOfMessage": "<prosody rate=\"110%\" pitch=\"+2st\">Diese Nachricht wurde dir präsentiert von Durex. Wähle dein emoji für eine chance, einen kostenlosen Familienurlaub zu gewinnen. Oder wähle Raute, um die Nachricht zu wiederholen. Durex: Weil kinder teuer sind. <audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody>",
 	"updateAvailable": "<prosody rate=\"110%\" pitch=\"+2st\">Ein Update von UpdateMax ist verfügbar. UpdateMax gibt dir immer die heissesten Updates der Woche. Wähle Raute und abboniere UpdateMax für nur 9.99€ im Monat. UpdateMax: Das Update Fetzt!<audio src=\"https://hotline.imakethings.ch/sound/jingle.wav\"/></prosody>"
 }
-:
+

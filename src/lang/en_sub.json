@@ -1,11 +1,11 @@
 {
   "voice": "en-US-Wavenet-F",
   "greeting": {
-    "one": "<prosody rate=\"90%\" pitch=\"+2st\">Uh Oh, Daddy I have been a very very bad girl. But before you give me my well-deserved punishment and spank me hard, I need you to listen to this message.</prosody>",
-    "other": "[0] <prosody rate=\"90%\" pitch=\"+2st\">Oh No Daddy, you don't seem to have a message... But that just means you have time to tie me down and use me as long and hard as you please!.</prosody> | [2,] <prosody rate=\"90%\" pitch=\"+2st\">Hey Daddy. You have %s new messages. I sure hope they don't distract you too much because I really need you to fuck me till i can't walk anymore! Hehe, that was naughty.</prosody>"
+    "one": "<prosody rate=\"90%%\" pitch=\"+2st\">Uh Oh, Daddy I have been a very very bad girl. But before you give me my well-deserved punishment and spank me hard, I need you to listen to this message.</prosody>",
+    "other": "[0] <prosody rate=\"90%%\" pitch=\"+2st\">Oh No Daddy, you don't seem to have a message... But that just means you have time to tie me down and use me as long and hard as you please!.</prosody> | [2,] <prosody rate=\"90%%\" pitch=\"+2st\">Hey Daddy. You have %s new messages. I sure hope they don't distract you too much because I really need you to fuck me till i can't walk anymore! Hehe, that was naughty.</prosody>"
   },
   "noMoreMessages": "<prosody rate=\"90%\" pitch=\"+2st\">That's all i have for you, daddy. Now don't you wanna give your little girl a treat and nut in my face?</prosody>",
-  "messageHeader": "<prosody rate=\"90%\" pitch=\"+2st\">That message is from %s. I think you were busy railing me against the wall then.. Hehe remember how you had me moan, Daddy?</prosody>",
+  "messageHeader": "<prosody rate=\"90%%\" pitch=\"+2st\">That message is from %s. I think you were busy railing me against the wall then.. Hehe remember how you had me moan, Daddy?</prosody>",
   "endOfMessage": "<prosody rate=\"90%\" pitch=\"+2st\">That's the end of the message, do you want me to gargle on your big balls while you reply with an emoji? Or dial the hash and choke me to repeat the message!</prosody>",
   "updateAvailable": "<prosody rate=\"90%\" pitch=\"+2st\">There's a new update available! How about you fuck me while the update is installing? You can cum where ever, but don't forget to dial the hash for options</prosody>"
 }
