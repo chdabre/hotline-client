@@ -1,0 +1,11 @@
+{
+  "voice": "de-DE-Wavenet-B",
+  "greeting": {
+		"one": "Jetz hör mal ganz gut zu: Ich hab deine kleine Tusse hier bei mir, und wenn du sie noch einmal sehen willst dann tust du genau was ich dir sage.",
+		"other": "[0] Sag kein Wort. Ich hab dein Gör hier in meinen Fingern. Wenn du nicht ganz schnell abhaust und mich nicht weiter nervst, dann wird nicht nur sie dran glauben. | [2,] Hallo. Sie haben %s neue Nachrichten."
+	},
+	"noMoreMessages": "So. Ich hab mit dir schon mehr als genug Zeit verschwendet. Das Mädchen wirst du nicht mehr sehen. <audio src=\"https://hotline.imakethings.ch/sound/gunshot.mp3\"/>\n.",
+	"messageHeader": "<audio src=\"https://hotline.imakethings.ch/sound/struggle01.wav\"/> Jemand möchte dir noch was sagen.",
+	"endOfMessage": "Dreh doch das rad und sende einen Hilfeschrei. Hören wird's eh niemand.<audio src=\"https://hotline.imakethings.ch/sound/struggle02.wav\"/> Und wenn du's wegen diesem Schreimaul hier nicht verstanden hast, wähle die Raute.",
+	"updateAvailable": "Ist mir zwar Scheissegal, aber das Mädchen hat vielleicht bessere Überlebenschancen wenn du endlich mal das Update installierst. Wähle die Raute oder du kriegst morgen ein Paket mit ihrem rechten Daumen. "
+}
