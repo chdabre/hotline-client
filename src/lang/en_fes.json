@@ -1,0 +1,11 @@
+{
+  "voice": "de-DE-Wavenet-C",
+  "greeting": {
+		"one": "Hello. I am se nu foren exchange Student. You have a new massage",
+		"other": "[0] Exkuse mi, i do not spik english very good. But anyway you dont have new massages | [2,] Hello i am the Austauschstudent from Germany. Yu have %s new massages"
+	},
+	"noMoreMessages": "I am zorry but i have to study now. And by that i mean talking to Ronny. he's cute.",
+	"messageHeader": "OK. ähm<break/> i don't know how to say that. 18.Januar 2020. Do you understand me? Anyway here is se massage.",
+	"endOfMessage": "Turn de wheel to send de answer. Or wähle raute to listen again",
+	"updateAvailable": "I have a new software for yu. Wähl de raute to go tu de menu"
+}
