@@ -4,7 +4,7 @@ i18n.configure({
   directory: 'src/lang'
 })
 
-i18n.setLocale('de_normal')
+i18n.setLocale('de_pissed')
 
 console.log(i18n.__('voice'))
 console.log(i18n.__n('greeting', 'greeting', 0))

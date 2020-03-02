@@ -88,8 +88,8 @@ class PhoneContext {
    * Set the i18n locale to a random available locale.
    */
   pickRandomLocale () {
-    const locales = ['de_normal', 'de_yoda', 'dog_of_wisdom']
-    const weights = [10, 2, 1]
+    const locales = ['de_normal', 'de_yoda', 'dog_of_wisdom', 'de_pissed']
+    const weights = [10, 2, 1, 2]
     const locale = new Chance().weighted(locales, weights)
     i18n.setLocale(locale)
     console.log(`[LOCALE] ${locale}`)
