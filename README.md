@@ -2,6 +2,8 @@
 
 Node.js Client for a one-way Chat network based on rotary phones and Telegram
 
+Server: https://github.com/chdabre/hotline-server
+
 ## Installation
 
 **Prerequisites**
