@@ -91,15 +91,15 @@ class PhoneContext {
     // Key: Locale name, Value: Relative probability
     const locales = {
       'de_normal': 100,
-      'de_sponsored': 20, // 8
+      'de_sponsored': 8, // 8
       'de_pissed': 5, // 5
       'de_sad': 5, // 5
       'de_uplifting': 5, // 5
-      'en_narrator': 20, // 5
+      'en_narrator': 5, // 5
       'en_fes': 3, // 3
       'de_kidnapping': 2, // 2
       'en_dom': 2, // 2
-      'en_sub': 20, // 2
+      'en_sub': 2, // 2
       'de_yoda': 1, // 1
       'dog_of_wisdom': 1, // 1
     }
