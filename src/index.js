@@ -98,7 +98,7 @@ class PhoneContext {
       'en_narrator': 5, // 5
       'en_fes': 3, // 3
       'de_kidnapping': 2, // 2
-      'en_dom': 200000, // 2
+      'en_dom': 2, // 2
       'en_sub': 2, // 2
       'de_yoda': 1, // 1
       'dog_of_wisdom': 1, // 1
