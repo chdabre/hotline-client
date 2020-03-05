@@ -137,7 +137,8 @@ export default class GpioManager extends EventEmitter {
   }
 
   setLed (value) {
-    return this._ledPin.write(value)
+    if (!process.env.DISABLE_HARDWARE) return this._ledPin.write(value)
+    else console.log('[IO] LED ' + value)
   }
 
   async blinkLed (times, speed = 200, even = true) {
@@ -145,6 +146,9 @@ export default class GpioManager extends EventEmitter {
     if (times >= 0) {
       if (even) times--
       setTimeout(() => this.blinkLed(times, speed, !even), speed)
+    } else {
+      console.log('[IO] Finished Blinking')
+      this._context.socketManager.getNewMessages()
     }
   }
 

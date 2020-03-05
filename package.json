@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node --experimental-modules src/index.js",
     "test-strings": "node --experimental-modules src/test-strings.js"
   },
   "dependencies": {

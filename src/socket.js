@@ -32,4 +32,8 @@ export default class SocketManager extends EventEmitter {
   sendReaction (id, message) {
     this._socket.emit('send_reaction', { message_id: id, message })
   }
+
+  getNewMessages () {
+    this._socket.emit('get_new_messages')
+  }
 }
