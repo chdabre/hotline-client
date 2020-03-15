@@ -11,11 +11,11 @@ export default class SoundManager {
     this._currentPlayers = []
   }
 
-  playSoundTTS (text, voiceName = 'de-DE-Wavenet-C', cache = true, speaker = false) {
+  playSoundTTS (text, voiceName = 'de-DE-Wavenet-C', cache = true) {
     const ttsProvider = new TTSProvider({ name: voiceName, languageCode: 'de-DE' })
     return new Promise((resolve, reject) => {
       ttsProvider.makeTTSRequest(text)
-        .then(filename => this.playSound(filename, false, speaker))
+        .then(filename => this.playSound(filename, false))
         .then(filename => {
           if (!cache) fsp.unlink(filename).then(() => resolve())
           else resolve()
@@ -26,7 +26,7 @@ export default class SoundManager {
 
   playSound (filename, mplayer = false, amp = false) {
     if (process.env.DISABLE_HARDWARE) return new Promise((resolve => resolve(filename)))
-    if (amp) this._context.gpioManager.setAmp(GpioManager.AMP_ON).catch(() => {})
+    if (amp || this._context.speakerMode) this._context.gpioManager.setAmp(GpioManager.AMP_ON).catch(() => {})
 
     return new Promise(((resolve, reject) => {
       // Don't attempt to open a player instance if you're not on a real device

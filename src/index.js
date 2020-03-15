@@ -193,8 +193,7 @@ class StateGreeting extends PhoneState {
     const messageCount = this._context.newMessages.length
     this._context.soundManager.playSoundTTS(
       i18n.__n('greeting', 'greeting', messageCount),
-      i18n.__('voice'),
-      true, this._context.speakerMode
+      i18n.__('voice')
     )
       .then(() => {
         if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
@@ -214,10 +213,9 @@ class StateReadMessage extends PhoneState {
       this._context.currentMessage = message
       this._context.soundManager.playSoundTTS(
         i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
-        i18n.__('voice'),
-        false, this._context.speakerMode
+        i18n.__('voice')
       )
-        .then(() => this._context.soundManager.playSound(message.url, true, this._context.speakerMode))
+        .then(() => this._context.soundManager.playSound(message.url, true))
         .then(() => this._context.setState(new StateExpectResponse(this._context)))
         .catch((e) => console.log(e))
     } else {
@@ -234,8 +232,7 @@ class StateNoMoreMessages extends PhoneState {
     this._context.gpioManager.setLed(GpioManager.LED_OFF)
     this._context.soundManager.playSoundTTS(
       i18n.__('noMoreMessages'),
-      i18n.__('voice'),
-      true, this._context.speakerMode
+      i18n.__('voice')
     )
       .then(() => this._context.setState(new StateTransactionEnd(this._context)))
       .catch(() => {})
@@ -247,7 +244,7 @@ class StateNoMoreMessages extends PhoneState {
  */
 class StateExpectResponse extends PhoneState {
   _init () {
-    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'), true, this._context.speakerMode)
+    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'))
       .catch(() => {})
   }
 
@@ -270,8 +267,7 @@ class StateTransactionEnd extends PhoneState {
       .then(hasUpdate => {
         return hasUpdate ? this._context.soundManager.playSoundTTS(
           i18n.__('updateAvailable'),
-          i18n.__('voice'),
-          true, this._context.speakerMode
+          i18n.__('voice')
         ) : Promise.resolve()
       })
       .catch(() => {})
