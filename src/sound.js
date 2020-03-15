@@ -48,7 +48,7 @@ export default class SoundManager {
       player.stderr.on('data', (err) => console.log('[PLAYER] ' + err.toString()))
       player.on('close', (code) => {
         if (code > 0) reject(new Error('Process failed with code '  + code))
-        else {
+        else if (!this._context.speakerMode) {
           this._context.gpioManager.setAmp(GpioManager.AMP_OFF)
             .then(() => resolve(filename))
             .catch(() => {})
