@@ -148,7 +148,7 @@ class PhoneState {
     if (input === '❤️') {
       console.log(`[AMP] Switch to speaker mode`)
       this._context.gpioManager.setAmp(GpioManager.AMP_ON)
-      this.speakerMode = true
+      this._context.speakerMode = true
     }
   }
 }
