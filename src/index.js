@@ -141,7 +141,12 @@ class PhoneState {
   onNotify () {}
   onUpdate () {}
 
-  onDialInput(input) { console.log(`[DIAL] ${input}`) }
+  onDialInput(input) {
+    console.log(`[DIAL] ${input}`)
+    if (input === '❤') {
+      this._context.gpioManager.setAmp(GpioManager.AMP_ON)
+    }
+  }
 }
 
 /**
@@ -160,6 +165,7 @@ class StateIdle extends PhoneState {
 
   _init () {
     this._context.soundManager.stopAll()
+    this._context.gpioManager.setAmp(GpioManager.AMP_OFF)
   }
 
   onNotify () {
