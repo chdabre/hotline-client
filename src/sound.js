@@ -52,7 +52,7 @@ export default class SoundManager {
           this._context.gpioManager.setAmp(GpioManager.AMP_OFF)
             .then(() => resolve(filename))
             .catch(() => {})
-        }
+        } else resolve(filename)
       })
     }))
   }
