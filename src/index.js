@@ -143,7 +143,8 @@ class PhoneState {
 
   onDialInput(input) {
     console.log(`[DIAL] ${input}`)
-    if (input === '❤') {
+    if (input === '❤️') {
+      console.log(`[AMP] Switch to speaker mode`)
       this._context.gpioManager.setAmp(GpioManager.AMP_ON)
     }
   }
