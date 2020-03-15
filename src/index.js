@@ -33,6 +33,8 @@ class PhoneContext {
     this.newMessages = []
     this.currentMessage = null
 
+    this.speakerMode = false
+
     /**
      * Initialize state
      * @type {PhoneState}
@@ -146,6 +148,7 @@ class PhoneState {
     if (input === '❤️') {
       console.log(`[AMP] Switch to speaker mode`)
       this._context.gpioManager.setAmp(GpioManager.AMP_ON)
+      this.speakerMode = true
     }
   }
 }
@@ -167,6 +170,7 @@ class StateIdle extends PhoneState {
   _init () {
     this._context.soundManager.stopAll()
     this._context.gpioManager.setAmp(GpioManager.AMP_OFF)
+    this._context.speakerMode = false
   }
 
   onNotify () {
@@ -189,7 +193,8 @@ class StateGreeting extends PhoneState {
     const messageCount = this._context.newMessages.length
     this._context.soundManager.playSoundTTS(
       i18n.__n('greeting', 'greeting', messageCount),
-      i18n.__('voice')
+      i18n.__('voice'),
+      true, this._context.speakerMode
     )
       .then(() => {
         if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
@@ -210,9 +215,9 @@ class StateReadMessage extends PhoneState {
       this._context.soundManager.playSoundTTS(
         i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
         i18n.__('voice'),
-        false
+        false, this._context.speakerMode
       )
-        .then(() => this._context.soundManager.playSound(message.url, true))
+        .then(() => this._context.soundManager.playSound(message.url, true, this._context.speakerMode))
         .then(() => this._context.setState(new StateExpectResponse(this._context)))
         .catch((e) => console.log(e))
     } else {
@@ -229,7 +234,8 @@ class StateNoMoreMessages extends PhoneState {
     this._context.gpioManager.setLed(GpioManager.LED_OFF)
     this._context.soundManager.playSoundTTS(
       i18n.__('noMoreMessages'),
-      i18n.__('voice')
+      i18n.__('voice'),
+      true, this._context.speakerMode
     )
       .then(() => this._context.setState(new StateTransactionEnd(this._context)))
       .catch(() => {})
@@ -241,7 +247,7 @@ class StateNoMoreMessages extends PhoneState {
  */
 class StateExpectResponse extends PhoneState {
   _init () {
-    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'))
+    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'), true, this._context.speakerMode)
       .catch(() => {})
   }
 
@@ -264,7 +270,8 @@ class StateTransactionEnd extends PhoneState {
       .then(hasUpdate => {
         return hasUpdate ? this._context.soundManager.playSoundTTS(
           i18n.__('updateAvailable'),
-          i18n.__('voice')
+          i18n.__('voice'),
+          true, this._context.speakerMode
         ) : Promise.resolve()
       })
       .catch(() => {})
