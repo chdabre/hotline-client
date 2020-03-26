@@ -211,7 +211,8 @@ class StateGreeting extends PhoneState {
       i18n.__('voice')
     )
 
-    if (messageCount > 0 && !this._cancelRequested) {
+    if (this._cancelRequested) return
+    if (messageCount > 0) {
       this._context.setState(new StateReadMessage(this._context))
     } else {
       this._context.setState(new StateTransactionEnd(this._context))
