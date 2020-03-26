@@ -98,7 +98,7 @@ class PhoneContext {
   pickRandomLocale () {
     // Key: Locale name, Value: Relative probability
     const locales = {
-      'de_normal': 100,
+      'de_normal': 80,
       'de_sponsored': 8, // 8
       'de_pissed': 5, // 5
       'de_sad': 5, // 5
