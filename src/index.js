@@ -1,6 +1,7 @@
 import i18n from 'i18n'
-import { register, format } from 'timeago.js/lib/index.js'
-import deDeTimeagoLocale from './de_timeago.js'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import de from 'javascript-time-ago/locale/de'
 
 import Chance from 'chance'
 import GpioManager from './io.js'
@@ -30,7 +31,8 @@ class PhoneContext {
       objectNotation: true
     })
     i18n.setLocale('de_normal')
-    register('de_DE', deDeTimeagoLocale)
+    TimeAgo.addLocale(en)
+    TimeAgo.addLocale(de)
 
     this._setupListeners()
 
@@ -115,8 +117,8 @@ class PhoneContext {
   }
 
   formatTimeago (date) {
-    const locale = i18n.getLocale().substr(0,2) === 'de' ? 'de_DE' : 'en_EN'
-    return format(date, locale)
+    const timeAgo = new TimeAgo(i18n.getLocale().substr(0,2) === 'de' ? 'de_DE' : 'en_US')
+    return timeAgo.format(date)
   }
 
   /**
