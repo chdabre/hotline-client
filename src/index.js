@@ -179,7 +179,7 @@ class PhoneState {
   async onNotify () {}
   async onUpdate () {}
 
-  onDialInput(input) {
+  async onDialInput(input) {
     console.log(`[DIAL] ${input}`)
     if (input === '❤️') {
       console.log(`[AMP] Switch to speaker mode`)
@@ -277,7 +277,7 @@ class StateExpectResponse extends PhoneState {
     await this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'))
   }
 
-  onDialInput (input) {
+  async onDialInput (input) {
     if (input !== '#') {
       this._context.socketManager.sendReaction(this._context.currentMessage.id, input)
       this._context.setState(new StateWaitForUpdate(this._context, StateReadMessage))
@@ -301,7 +301,7 @@ class StateTransactionEnd extends PhoneState {
     }
   }
 
-  onDialInput (input) {
+  async onDialInput (input) {
     if (input === '#') this._context.setState(new StateMenu(this._context))
   }
 }
@@ -315,7 +315,7 @@ class StateMenu extends PhoneState {
     await this._context.soundManager.playSoundTTS(i18n.__('menu.intro'))
   }
 
-  onDialInput (input) {
+  async onDialInput (input) {
     console.log(input)
     switch (input) {
       case '❤️':
@@ -342,7 +342,7 @@ class StateWaitForUpdate extends PhoneState {
     this.nextState = nextState
   }
 
-  onUpdate () {
+  async onUpdate () {
     console.log('[WAIT FOR UPDATE] update received!')
     this._context.setState(new this.nextState(this._context))
   }
