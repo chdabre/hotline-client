@@ -60,11 +60,8 @@ export default class GpioManager extends EventEmitter {
     this._startWatchingMute()
 
     // Initialize the LED as LOW
-    this._ledPin.write(Gpio.LOW)
-      .catch(err => {})
-
-    this._ampEnablePin.write(Gpio.LOW)
-      .catch(err => {})
+    this._ledPin.write(Gpio.LOW).catch(() => {})
+    this._ampEnablePin.write(Gpio.LOW).catch(() => {})
   }
 
   /**
@@ -111,8 +108,8 @@ export default class GpioManager extends EventEmitter {
    */
   _startWatchingCradle () {
     this._cradlePin.watch((err, value) => {
-      if (err) {
-      } else {
+      if (!err) {
+        console.log('[IO] CRADLE ' + value ? 'UP' : 'DOWN')
         this.emit('cradle', value)
       }
     })
