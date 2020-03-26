@@ -232,10 +232,10 @@ class StateReadMessage extends PhoneState {
         i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
         i18n.__('voice')
       )
-      if (!this._cancelRequested) {
-        await this._context.soundManager.playSound(message.url, true)
-        this._context.setState(new StateExpectResponse(this._context))
-      }
+      if (this._cancelRequested) return
+      await this._context.soundManager.playSound(message.url, true)
+      if (this._cancelRequested) return
+      this._context.setState(new StateExpectResponse(this._context))
     } else {
       this._context.setState(new StateNoMoreMessages(this._context))
     }
