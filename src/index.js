@@ -1,5 +1,5 @@
 import i18n from 'i18n'
-import * as timeago from 'timeago.js'
+import {register, format} from 'timeago.js'
 import deDeTimeagoLocale from './de_timeago.js'
 
 import Chance from 'chance'
@@ -30,7 +30,7 @@ class PhoneContext {
       objectNotation: true
     })
     i18n.setLocale('de_normal')
-    timeago.register('de_DE', deDeTimeagoLocale)
+    register('de_DE', deDeTimeagoLocale)
 
     this._setupListeners()
 
@@ -116,7 +116,7 @@ class PhoneContext {
 
   formatTimeago (date) {
     const locale = i18n.getLocale().substr(0,2) === 'de' ? 'de_DE' : 'en_EN'
-    return timeago.format(date, locale)
+    return format(date, locale)
   }
 
   /**
