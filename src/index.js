@@ -50,8 +50,8 @@ class PhoneContext {
   _setupListeners() {
     // Cradle Events
     this.gpioManager.on('cradle', value => {
-      if (value === GpioManager.CRADLE_UP) this._state.onCradleUp()
-      else if (value === GpioManager.CRADLE_DOWN) this._state.onCradleDown()
+      if (value === GpioManager.CRADLE_UP) this._state.onCradleUp().catch(() => {})
+      else this._state.onCradleDown().catch(() => {})
     })
 
     // Dial Events
@@ -67,7 +67,7 @@ class PhoneContext {
     })
 
     // New Message Notification
-    this.socketManager.on('notify', () => this._state.onNotify())
+    this.socketManager.on('notify', () => this._state.onNotify().catch(() => {}))
 
     // New Message data
     this.socketManager.on('messages', msg => {
@@ -136,11 +136,11 @@ class PhoneState {
   }
 
   _init () {}
-  onCradleUp () {}
+  async onCradleUp () {}
   onCradleDown () {
     this._context.setState(new StateIdle(this._context))
   }
-  onNotify () {}
+  async onNotify () {}
   onUpdate () {}
 
   onDialInput(input) {
@@ -157,14 +157,15 @@ class PhoneState {
  * The "hung up" state - The handset is in the cradle and nothing is happening.
  */
 class StateIdle extends PhoneState {
-  onCradleUp () {
-    this._context.soundManager.playSound('./src/assets/dialtone.opus', false)
-      .then(() => {
-        if (this._context.ready) return this._context.setState(new StateGreeting(this._context))
-        else return this._context.soundManager.playSoundTTS(i18n.__('notConnected'))
-          .then(() => this._context.setState(new StateMenu(this._context())))
-      })
-      .catch(() => {})
+  async onCradleUp () {
+    await this._context.soundManager.playSound('./src/assets/dialtone.opus', false)
+
+    if (this._context.ready) {
+      this._context.setState(new StateGreeting(this._context))
+    } else {
+      await this._context.soundManager.playSoundTTS(i18n.__('notConnected'))
+      this._context.setState(new StateMenu(this._context()))
+    }
   }
 
   _init () {
@@ -173,13 +174,10 @@ class StateIdle extends PhoneState {
     this._context.speakerMode = false
   }
 
-  onNotify () {
+  async onNotify () {
     this._context.gpioManager.setLed(GpioManager.LED_ON)
-    this._context.gpioManager.isUnmuted()
-      .then(isUnmuted => {
-        if (isUnmuted) return this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
-      })
-      .catch(() => {})
+    const isUnmuted = await this._context.gpioManager.isUnmuted()
+    if (isUnmuted) await this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
   }
 }
 
