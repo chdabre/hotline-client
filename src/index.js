@@ -74,7 +74,7 @@ class PhoneContext {
       this.gpioManager.setLed(msg.hasMessages ? GpioManager.LED_ON : GpioManager.LED_OFF)
       this.newMessages = msg.messages
       console.log('[MESSAGES] new message count: ' + this.newMessages.length)
-      this._state.onUpdate()
+      this._state.onUpdate().catch(() => {})
     })
   }
 
@@ -110,6 +110,20 @@ class PhoneContext {
     console.log(`[LOCALE] ${locale}`)
   }
 
+  /**
+   * Enable / Disable speaker mode
+   * @param enable {Boolean} If the speaker mode should be enabled
+   */
+  setSpeakerMode (enable) {
+    if (enable) {
+      this.gpioManager.setAmp(GpioManager.AMP_ON)
+      this.speakerMode = true
+    } else {
+      this.speakerMode = false
+      this.gpioManager.setAmp(GpioManager.AMP_OFF)
+    }
+  }
+
   _onInit (msg) {
     console.log('[PHONE] Sucessfully authorized with server.')
     console.log(msg.hasMessages ? 'New messages available': 'No new messages.')
@@ -137,18 +151,15 @@ class PhoneState {
 
   _init () {}
   async onCradleUp () {}
-  onCradleDown () {
-    this._context.setState(new StateIdle(this._context))
-  }
+  async onCradleDown () { this._context.setState(new StateIdle(this._context)) }
   async onNotify () {}
-  onUpdate () {}
+  async onUpdate () {}
 
   onDialInput(input) {
     console.log(`[DIAL] ${input}`)
     if (input === '❤️') {
       console.log(`[AMP] Switch to speaker mode`)
-      this._context.gpioManager.setAmp(GpioManager.AMP_ON)
-      this._context.speakerMode = true
+      this._context.setSpeakerMode(true)
     }
   }
 }
