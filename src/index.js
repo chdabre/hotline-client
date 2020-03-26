@@ -117,6 +117,7 @@ class PhoneContext {
   }
 
   formatTimeago (date) {
+    console.log(i18n.getLocale().substr(0,2))
     const timeAgo = new TimeAgo(i18n.getLocale().substr(0,2) === 'de' ? 'de_DE' : 'en_US')
     return timeAgo.format(date)
   }
