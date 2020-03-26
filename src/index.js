@@ -1,7 +1,7 @@
 import i18n from 'i18n'
 import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import de from 'javascript-time-ago/locale/de'
+import en from 'javascript-time-ago/locale/en/index.js'
+import de from 'javascript-time-ago/locale/de/index.js'
 
 import Chance from 'chance'
 import GpioManager from './io.js'
