@@ -1,4 +1,7 @@
 import i18n from 'i18n'
+import * as timeago from 'timeago.js'
+import deDeTimeagoLocale from './de_timeago.js'
+
 import Chance from 'chance'
 import GpioManager from './io.js'
 import SoundManager from './sound.js'
@@ -27,6 +30,7 @@ class PhoneContext {
       objectNotation: true
     })
     i18n.setLocale('de_normal')
+    timeago.register('de_DE', deDeTimeagoLocale)
 
     this._setupListeners()
 
@@ -108,6 +112,11 @@ class PhoneContext {
     const locale = new Chance().weighted(Object.keys(locales), Object.values(locales))
     i18n.setLocale(locale)
     console.log(`[LOCALE] ${locale}`)
+  }
+
+  formatTimeago (date) {
+    const locale = i18n.getLocale().substr(0,2) === 'de' ? 'de_DE' : 'en_EN'
+    return timeago.format(date, locale)
   }
 
   /**
@@ -229,7 +238,8 @@ class StateReadMessage extends PhoneState {
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
       await this._context.soundManager.playSoundTTS(
-        i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
+        //i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
+        i18n.__('messageHeader', this._context.formatTimeago(new Date(message.date))),
         i18n.__('voice')
       )
       if (this._cancelRequested) return
