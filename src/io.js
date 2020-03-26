@@ -109,8 +109,10 @@ export default class GpioManager extends EventEmitter {
   _startWatchingCradle () {
     this._cradlePin.watch((err, value) => {
       if (!err) {
-        console.log('[IO] CRADLE ' + value ? 'UP' : 'DOWN')
+        console.log('[IO] CRADLE ' + (value ? 'UP' : 'DOWN'))
         this.emit('cradle', value)
+      } else {
+        console.log('[IO] ERROR: ', err)
       }
     })
   }
