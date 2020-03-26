@@ -264,7 +264,7 @@ class StateNoMoreMessages extends PhoneState {
       i18n.__('noMoreMessages'),
       i18n.__('voice')
     )
-    this._context.setState(new StateTransactionEnd(this._context))
+    if (!this._cancelRequested) this._context.setState(new StateTransactionEnd(this._context))
   }
 }
 
