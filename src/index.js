@@ -143,15 +143,27 @@ class PhoneContext {
  */
 class PhoneState {
   constructor (context) {
-    this._context = context
     console.log(`[STATE CHANGE] - ${ this.constructor.name }`)
+
+    this._context = context
+    this._cancelRequested = false
 
     this._init().catch(() => {})
   }
 
   async _init () {}
+
+  async _cancel () {
+    this._cancelRequested = true
+    this._context.soundManager.stopAll()
+    this._context.setSpeakerMode(false)
+  }
+
   async onCradleUp () {}
-  async onCradleDown () { this._context.setState(new StateIdle(this._context)) }
+  async onCradleDown () {
+    await this._cancel()
+    this._context.setState(new StateIdle(this._context))
+  }
   async onNotify () {}
   async onUpdate () {}
 
@@ -179,11 +191,6 @@ class StateIdle extends PhoneState {
     }
   }
 
-  async _init () {
-    this._context.soundManager.stopAll()
-    this._context.setSpeakerMode(false)
-  }
-
   async onNotify () {
     this._context.gpioManager.setLed(GpioManager.LED_ON)
     const isUnmuted = await this._context.gpioManager.isUnmuted()
@@ -204,7 +211,7 @@ class StateGreeting extends PhoneState {
       i18n.__('voice')
     )
 
-    if (messageCount > 0) {
+    if (messageCount > 0 && !this._cancelRequested) {
       this._context.setState(new StateReadMessage(this._context))
     } else {
       this._context.setState(new StateTransactionEnd(this._context))
@@ -224,8 +231,10 @@ class StateReadMessage extends PhoneState {
         i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
         i18n.__('voice')
       )
-      await this._context.soundManager.playSound(message.url, true)
-      this._context.setState(new StateExpectResponse(this._context))
+      if (!this._cancelRequested) {
+        await this._context.soundManager.playSound(message.url, true)
+        this._context.setState(new StateExpectResponse(this._context))
+      }
     } else {
       this._context.setState(new StateNoMoreMessages(this._context))
     }
@@ -270,7 +279,7 @@ class StateExpectResponse extends PhoneState {
 class StateTransactionEnd extends PhoneState {
   async _init () {
     const hasUpdate = utils.checkForUpdates()
-    if (hasUpdate) {
+    if (hasUpdate && !this._cancelRequested) {
         await this._context.soundManager.playSoundTTS(
           i18n.__('updateAvailable'),
           i18n.__('voice')
