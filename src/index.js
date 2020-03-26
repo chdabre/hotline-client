@@ -146,10 +146,10 @@ class PhoneState {
     this._context = context
     console.log(`[STATE CHANGE] - ${ this.constructor.name }`)
 
-    this._init()
+    this._init().catch(() => {})
   }
 
-  _init () {}
+  async _init () {}
   async onCradleUp () {}
   async onCradleDown () { this._context.setState(new StateIdle(this._context)) }
   async onNotify () {}
@@ -179,10 +179,9 @@ class StateIdle extends PhoneState {
     }
   }
 
-  _init () {
+  async _init () {
     this._context.soundManager.stopAll()
-    this._context.gpioManager.setAmp(GpioManager.AMP_OFF)
-    this._context.speakerMode = false
+    this._context.setSpeakerMode(false)
   }
 
   async onNotify () {
@@ -196,19 +195,20 @@ class StateIdle extends PhoneState {
  * The Handset has just been picked up
  */
 class StateGreeting extends PhoneState {
-  _init () {
+  async _init () {
     this._context.pickRandomLocale()
 
     const messageCount = this._context.newMessages.length
-    this._context.soundManager.playSoundTTS(
+    await this._context.soundManager.playSoundTTS(
       i18n.__n('greeting', 'greeting', messageCount),
       i18n.__('voice')
     )
-      .then(() => {
-        if (messageCount > 0 ) this._context.setState(new StateReadMessage(this._context))
-        else this._context.setState(new StateTransactionEnd(this._context))
-      })
-      .catch(error => console.log(error))
+
+    if (messageCount > 0) {
+      this._context.setState(new StateReadMessage(this._context))
+    } else {
+      this._context.setState(new StateTransactionEnd(this._context))
+    }
   }
 }
 
@@ -216,17 +216,16 @@ class StateGreeting extends PhoneState {
  * Read out new messages until there are no more.
  */
 class StateReadMessage extends PhoneState {
-  _init () {
+  async _init () {
     const message = this._context.newMessages[0]
     if (typeof message !== 'undefined') {
       this._context.currentMessage = message
-      this._context.soundManager.playSoundTTS(
+      await this._context.soundManager.playSoundTTS(
         i18n.__('messageHeader', new Date(message.date).toLocaleString(i18n.getLocale().split('_')[0])),
         i18n.__('voice')
       )
-        .then(() => this._context.soundManager.playSound(message.url, true))
-        .then(() => this._context.setState(new StateExpectResponse(this._context)))
-        .catch((e) => console.log(e))
+      await this._context.soundManager.playSound(message.url, true)
+      this._context.setState(new StateExpectResponse(this._context))
     } else {
       this._context.setState(new StateNoMoreMessages(this._context))
     }
@@ -237,14 +236,13 @@ class StateReadMessage extends PhoneState {
  * There are no new messages.
  */
 class StateNoMoreMessages extends PhoneState {
-  _init () {
+  async _init () {
     this._context.gpioManager.setLed(GpioManager.LED_OFF)
-    this._context.soundManager.playSoundTTS(
+    await this._context.soundManager.playSoundTTS(
       i18n.__('noMoreMessages'),
       i18n.__('voice')
     )
-      .then(() => this._context.setState(new StateTransactionEnd(this._context)))
-      .catch(() => {})
+    this._context.setState(new StateTransactionEnd(this._context))
   }
 }
 
@@ -252,9 +250,8 @@ class StateNoMoreMessages extends PhoneState {
  * Read out new messages until there are no more.
  */
 class StateExpectResponse extends PhoneState {
-  _init () {
-    this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'))
-      .catch(() => {})
+  async _init () {
+    await this._context.soundManager.playSoundTTS(i18n.__('endOfMessage'), i18n.__('voice'))
   }
 
   onDialInput (input) {
@@ -271,15 +268,14 @@ class StateExpectResponse extends PhoneState {
  * I have nothing more to say.
  */
 class StateTransactionEnd extends PhoneState {
-  _init () {
-    utils.checkForUpdates()
-      .then(hasUpdate => {
-        return hasUpdate ? this._context.soundManager.playSoundTTS(
+  async _init () {
+    const hasUpdate = utils.checkForUpdates()
+    if (hasUpdate) {
+        await this._context.soundManager.playSoundTTS(
           i18n.__('updateAvailable'),
           i18n.__('voice')
-        ) : Promise.resolve()
-      })
-      .catch(() => {})
+        )
+    }
   }
 
   onDialInput (input) {
@@ -291,10 +287,9 @@ class StateTransactionEnd extends PhoneState {
  * Loads of different utility functions
  */
 class StateMenu extends PhoneState {
-  _init () {
+  async _init () {
     i18n.setLocale('de_normal')
-    this._context.soundManager.playSoundTTS(i18n.__('menu.intro'))
-      .catch(() => {})
+    await this._context.soundManager.playSoundTTS(i18n.__('menu.intro'))
   }
 
   onDialInput (input) {
