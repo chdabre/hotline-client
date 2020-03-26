@@ -291,7 +291,7 @@ class StateExpectResponse extends PhoneState {
  */
 class StateTransactionEnd extends PhoneState {
   async _init () {
-    const hasUpdate = utils.checkForUpdates()
+    const hasUpdate = await utils.checkForUpdates()
     if (hasUpdate && !this._cancelRequested) {
         await this._context.soundManager.playSoundTTS(
           i18n.__('updateAvailable'),
