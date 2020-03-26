@@ -1,5 +1,6 @@
 import i18n from 'i18n'
-import { format, register } from 'timeago.js/esm/index.js'
+import { register } from 'timeago.js/esm/index.js'
+import { format } from 'timeago.js/esm/format.js'
 import deDeTimeagoLocale from './de_timeago.js'
 
 import Chance from 'chance'
