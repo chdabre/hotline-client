@@ -208,7 +208,7 @@ class StateIdle extends PhoneState {
     if (isUnmuted) await this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
   }
 
-  async onDialInput() {
+  async onDialInput (input) {
     console.log(`[DIAL] ${input}`)
   }
 }
