@@ -99,8 +99,8 @@ export default class GpioManager extends EventEmitter {
       if (err) {
       } else {
         if (value === Gpio.LOW && this._dialing) {
-          console.log('[IO] PULSE ', this._dialCounter)
           this._dialCounter++
+          console.log('[IO] PULSE ', this._dialCounter)
         }
       }
     })
