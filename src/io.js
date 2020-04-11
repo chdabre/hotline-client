@@ -82,7 +82,7 @@ export default class GpioManager extends EventEmitter {
       } else {
         if (value === Gpio.LOW) {
           this._dialing = true
-          this._dialCounter = config.dial_offset || 1 // Has to be set to either 0 or 1 depending on the rotary dial model
+          this._dialCounter = typeof config.dial_offset !== 'undefined' ? config.dial_offset : 1 // Has to be set to either 0 or 1 depending on the rotary dial model
           console.log('[IO] START DIAL ', this._dialCounter)
         } else {
           if (this._dialing) {
