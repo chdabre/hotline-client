@@ -37,8 +37,8 @@ export default class GpioManager extends EventEmitter {
    */
   _setup () {
     // Setup pins
-    this._dialPin = new Gpio(GpioManager.DIAL_PIN, 'in', 'both', { debounceTimeout: 10 })
-    this._pulsePin = new Gpio(GpioManager.PULSE_PIN, 'in', 'falling', { debounceTimeout: 10 })
+    this._dialPin = new Gpio(GpioManager.DIAL_PIN, 'in', 'both', { debounceTimeout: 5 })
+    this._pulsePin = new Gpio(GpioManager.PULSE_PIN, 'in', 'falling', { debounceTimeout: 5 })
 
     this._cradlePin = new Gpio(GpioManager.CRADLE_PIN, 'in', 'both', { debounceTimeout: 20 })
     this._mutePin = new Gpio(GpioManager.MUTE_PIN, 'in', 'both', { debounceTimeout: 20 })
@@ -82,11 +82,13 @@ export default class GpioManager extends EventEmitter {
         if (value === Gpio.LOW) {
           this._dialing = true
           this._dialCounter = 1 // Has to be set to either 0 or 1 depending on the rotary dial model
+          console.log('[IO] START DIAL ', this._dialCounter)
         } else {
           if (this._dialing) {
             // Emit dial event when the dialing operation has finished
             // The value is between 0-9, so 1 lower than the actual number dialed
             this.emit('dial', this._dialCounter - 1)
+            console.log('[IO] END DIAL ', this._dialCounter - 1)
           }
         }
       }
@@ -96,7 +98,10 @@ export default class GpioManager extends EventEmitter {
     this._pulsePin.watch((err, value) => {
       if (err) {
       } else {
-        if (value === Gpio.LOW && this._dialing) this._dialCounter++
+        if (value === Gpio.LOW && this._dialing) {
+          console.log('[IO] PULSE ', this._dialCounter)
+          this._dialCounter++
+        }
       }
     })
   }
