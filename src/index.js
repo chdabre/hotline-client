@@ -207,6 +207,10 @@ class StateIdle extends PhoneState {
     const isUnmuted = await this._context.gpioManager.isUnmuted()
     if (isUnmuted) await this._context.soundManager.playSound('./src/assets/ring.opus', false, true)
   }
+
+  async onDialInput() {
+    console.log(`[DIAL] ${input}`)
+  }
 }
 
 /**
