@@ -38,7 +38,7 @@ export default class GpioManager extends EventEmitter {
   _setup () {
     // Setup pins
     this._dialPin = new Gpio(GpioManager.DIAL_PIN, 'in', 'both', { debounceTimeout: 100 })
-    this._pulsePin = new Gpio(GpioManager.PULSE_PIN, 'in', 'falling', { debounceTimeout: 20 })
+    this._pulsePin = new Gpio(GpioManager.PULSE_PIN, 'in', 'falling', { debounceTimeout: 10 })
 
     this._cradlePin = new Gpio(GpioManager.CRADLE_PIN, 'in', 'both', { debounceTimeout: 20 })
     this._mutePin = new Gpio(GpioManager.MUTE_PIN, 'in', 'both', { debounceTimeout: 20 })
