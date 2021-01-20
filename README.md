@@ -8,11 +8,18 @@ Server: https://github.com/chdabre/hotline-server
 
 **Prerequisites**
 - This Project is intended to be run on an Orange Pi Zero with Armbian Buster
-- Requires Node 12
 - The Software needs root access to run.
-- The system relies on the Google Cloud TTS API. Before installing, download your Google API key from the Google Cloud Dashboard and place it in the project root directory with the name `google-cloud-credentials.json`
+
+**Device setup**
+- Install Armbian Buster
+- Connect to WiFi using serial port at 115200 baud. Command: `nmcli d wifi connect my_wifi password <password>`
+- run apt update & apt upgrade
+- apt install `mplayer opus-tools`
+- install nvm, node 13.5.0, yarn
 
 **Installation**
-- Clone the repository to the `/root` directory and run `install.sh`.
+- Clone the repository to the `/root` directory
+- The system relies on the Google Cloud TTS API. Before installing, download your Google API key from the Google Cloud Dashboard and place it in the project root directory with the name `google-cloud-credentials.json`
+- run `install.sh`.
 - Copy the file `config-example.js` and rename it to `config.js`.
 - Configure your client ID in the config file.
